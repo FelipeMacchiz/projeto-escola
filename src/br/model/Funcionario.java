@@ -1,0 +1,87 @@
+package br.model;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "funcionario")
+@TableGenerator(
+        name = "gerador_id",
+        table = "sqlite_sequence",
+        pkColumnName = "name",
+        valueColumnName = "seq",
+        pkColumnValue = "funcionario",
+        initialValue = 1,
+        allocationSize = 1
+)
+public class Funcionario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "gerador_id")
+    @Column(name = "codFuncionario", nullable = false)
+    private int codFuncionario;
+
+    @Column(name = "nome", nullable = false)
+    private String nome;
+
+    @Column(name = "RG", nullable = false)
+    private String rg;
+
+    @Column(name = "CPF", nullable = false)
+    private String cpf;
+
+    @Column(name = "nasc", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private String nasc;
+
+    public Funcionario() {
+    }
+    public Funcionario(String nome, String rg, String cpf, String nasc) {
+        this.nome = nome;
+        this.rg = rg;
+        this.cpf = cpf;
+        this.nasc = nasc;
+    }
+    public Funcionario(int codFuncionario, String nome, String rg, String cpf, String nasc) {
+        this.codFuncionario = codFuncionario;
+        this.nome = nome;
+        this.rg = rg;
+        this.cpf = cpf;
+        this.nasc = nasc;
+    }
+
+    public int getCodFuncionario() {
+        return codFuncionario;
+    }
+    public void setCodFuncionario(int codFuncionario) {
+        this.codFuncionario = codFuncionario;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getRg() {
+        return rg;
+    }
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getNasc() {
+        return nasc;
+    }
+    public void setNasc(String nasc) {
+        this.nasc = nasc;
+    }
+
+}

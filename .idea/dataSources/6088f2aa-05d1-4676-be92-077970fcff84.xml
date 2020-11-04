@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="dados_escolar.db">
+  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.19">
+    <root id="1">
+      <ServerVersion>3.31.1</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="main">
+      <Current>1</Current>
+    </schema>
+    <collation id="3" parent="1" name="BINARY"/>
+    <collation id="4" parent="1" name="NOCASE"/>
+    <collation id="5" parent="1" name="RTRIM"/>
+    <table id="6" parent="2" name="agendamento"/>
+    <table id="7" parent="2" name="aluno"/>
+    <table id="8" parent="2" name="alunoCurso"/>
+    <table id="9" parent="2" name="boleto"/>
+    <table id="10" parent="2" name="curso"/>
+    <table id="11" parent="2" name="cursoDisciplina"/>
+    <table id="12" parent="2" name="depFuncionario"/>
+    <table id="13" parent="2" name="depServico"/>
+    <table id="14" parent="2" name="departamento"/>
+    <table id="15" parent="2" name="disciplina"/>
+    <table id="16" parent="2" name="funcionario"/>
+    <table id="17" parent="2" name="livro"/>
+    <table id="18" parent="2" name="notas"/>
+    <table id="19" parent="2" name="reservaLivros"/>
+    <table id="20" parent="2" name="servico"/>
+    <table id="21" parent="2" name="sqlite_master">
+      <System>1</System>
+    </table>
+    <table id="22" parent="2" name="sqlite_sequence">
+      <System>1</System>
+    </table>
+    <column id="23" parent="6" name="codAgendamento">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="24" parent="6" name="codServico">
+      <Position>2</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="25" parent="6" name="codAluno">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="26" parent="6" name="horario">
+      <Position>4</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="27" parent="6">
+      <ColNames>codAgendamento</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="28" parent="6">
+      <ColNames>codServico</ColNames>
+      <RefTableName>servico</RefTableName>
+      <RefColNames>codServico</RefColNames>
+    </foreign-key>
+    <foreign-key id="29" parent="6">
+      <ColNames>codAluno</ColNames>
+      <RefTableName>aluno</RefTableName>
+      <RefColNames>codAluno</RefColNames>
+    </foreign-key>
+    <column id="30" parent="7" name="codAluno">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="31" parent="7" name="nome">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="32" parent="7" name="RG">
+      <Position>3</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="33" parent="7" name="CPF">
+      <Position>4</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="34" parent="7" name="nasc">
+      <Position>5</Position>
+      <DataType>DATE|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="35" parent="7">
+      <ColNames>codAluno</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="36" parent="8" name="codAlunoCurso">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="37" parent="8" name="codAluno">
+      <Position>2</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="38" parent="8" name="codCurso">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="39" parent="8">
+      <ColNames>codAlunoCurso</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="40" parent="8">
+      <ColNames>codAluno</ColNames>
+      <RefTableName>aluno</RefTableName>
+      <RefColNames>codCurso</RefColNames>
+    </foreign-key>
+    <foreign-key id="41" parent="8">
+      <ColNames>codCurso</ColNames>
+      <RefTableName>curso</RefTableName>
+      <RefColNames>codCurso</RefColNames>
+    </foreign-key>
+    <column id="42" parent="9" name="codBoleto">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="43" parent="9" name="codAluno">
+      <Position>2</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="44" parent="9" name="dataVencimento">
+      <Position>3</Position>
+      <DataType>DATE|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="45" parent="9" name="valor">
+      <Position>4</Position>
+      <DataType>REAL|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="46" parent="9" name="desconto">
+      <Position>5</Position>
+      <DataType>REAL|0s</DataType>
+    </column>
+    <column id="47" parent="9" name="valorPago">
+      <Position>6</Position>
+      <DataType>REAL|0s</DataType>
+    </column>
+    <key id="48" parent="9">
+      <ColNames>codBoleto</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="49" parent="9">
+      <ColNames>codAluno</ColNames>
+      <RefTableName>aluno</RefTableName>
+      <RefColNames>codAluno</RefColNames>
+    </foreign-key>
+    <column id="50" parent="10" name="codCurso">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="51" parent="10" name="nomeCurso">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+    </column>
+    <column id="52" parent="10" name="duracao">
+      <Position>3</Position>
+      <DataType>intEGER|0s</DataType>
+    </column>
+    <key id="53" parent="10">
+      <ColNames>codCurso</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="54" parent="11" name="codCursoDisciplina">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="55" parent="11" name="codCurso">
+      <Position>2</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="56" parent="11" name="codDisciplina">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="57" parent="11">
+      <ColNames>codCursoDisciplina</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="58" parent="11">
+      <ColNames>codCurso</ColNames>
+      <RefTableName>curso</RefTableName>
+      <RefColNames>codCurso</RefColNames>
+    </foreign-key>
+    <foreign-key id="59" parent="11">
+      <ColNames>codDisciplina</ColNames>
+      <RefTableName>disciplina</RefTableName>
+      <RefColNames>codDisciplina</RefColNames>
+    </foreign-key>
+    <column id="60" parent="12" name="codDepFuncionario">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="61" parent="12" name="codFuncionario">
+      <Position>2</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="62" parent="12" name="codDepartamento">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="63" parent="12">
+      <ColNames>codDepFuncionario</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="64" parent="12">
+      <ColNames>codFuncionario</ColNames>
+      <RefTableName>funcionario</RefTableName>
+      <RefColNames>codFuncionario</RefColNames>
+    </foreign-key>
+    <foreign-key id="65" parent="12">
+      <ColNames>codDepartamento</ColNames>
+      <RefTableName>departamento</RefTableName>
+      <RefColNames>codDepartamento</RefColNames>
+    </foreign-key>
+    <column id="66" parent="13" name="codDepServico">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="67" parent="13" name="codDepartamento">
+      <Position>2</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="68" parent="13" name="codServico">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="69" parent="13">
+      <ColNames>codDepServico</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="70" parent="13">
+      <ColNames>codDepartamento</ColNames>
+      <RefTableName>departamento</RefTableName>
+      <RefColNames>codDepartamento</RefColNames>
+    </foreign-key>
+    <foreign-key id="71" parent="13">
+      <ColNames>codServico</ColNames>
+      <RefTableName>servico</RefTableName>
+      <RefColNames>codServico</RefColNames>
+    </foreign-key>
+    <column id="72" parent="14" name="codDepartamento">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="73" parent="14" name="descricao">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="74" parent="14">
+      <ColNames>codDepartamento</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="75" parent="15" name="codDisciplina">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="76" parent="15" name="nome">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="77" parent="15">
+      <ColNames>codDisciplina</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="78" parent="16" name="codFuncionario">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="79" parent="16" name="nome">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="80" parent="16" name="CPF">
+      <Position>3</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="81" parent="16" name="RG">
+      <Position>4</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="82" parent="16" name="nasc">
+      <Position>5</Position>
+      <DataType>date|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="83" parent="16">
+      <ColNames>codFuncionario</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="84" parent="17" name="codLivro">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="85" parent="17" name="nome">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="86" parent="17">
+      <ColNames>codLivro</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="87" parent="18" name="codNotas">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="88" parent="18" name="codAluno">
+      <Position>2</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="89" parent="18" name="notas">
+      <Position>3</Position>
+      <DataType>REAL|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="90" parent="18">
+      <ColNames>codNotas</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="91" parent="18">
+      <ColNames>codAluno</ColNames>
+      <RefTableName>aluno</RefTableName>
+      <RefColNames>codCurso</RefColNames>
+    </foreign-key>
+    <column id="92" parent="19" name="codReserva">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="93" parent="19" name="codAluno">
+      <Position>2</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="94" parent="19" name="codLivro">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="95" parent="19" name="dataEmprestimo">
+      <Position>4</Position>
+      <DataType>DATE|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="96" parent="19" name="dataEntrega">
+      <Position>5</Position>
+      <DataType>DATE|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="97" parent="19">
+      <ColNames>codReserva</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="98" parent="19">
+      <ColNames>codAluno</ColNames>
+      <RefTableName>aluno</RefTableName>
+      <RefColNames>codAluno</RefColNames>
+    </foreign-key>
+    <foreign-key id="99" parent="19">
+      <ColNames>codLivro</ColNames>
+      <RefTableName>livro</RefTableName>
+      <RefColNames>codLivro</RefColNames>
+    </foreign-key>
+    <column id="100" parent="20" name="codServico">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="101" parent="20" name="nome">
+      <Position>2</Position>
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="102" parent="20">
+      <ColNames>codServico</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="103" parent="21" name="type">
+      <Position>1</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="104" parent="21" name="name">
+      <Position>2</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="105" parent="21" name="tbl_name">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="106" parent="21" name="rootpage">
+      <Position>4</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="107" parent="21" name="sql">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="108" parent="22" name="name">
+      <Position>1</Position>
+    </column>
+    <column id="109" parent="22" name="seq">
+      <Position>2</Position>
+    </column>
+  </database-model>
+</dataSource>
