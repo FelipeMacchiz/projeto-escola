@@ -3,6 +3,7 @@ package br.system;
 import br.dao.*;
 import br.model.*;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -156,6 +157,46 @@ public class ModoAluno {
             // sout done
             System.out.printf("Reserva Feita! %nLivro: %s [%04d] %nData de Emprestimo: %s %nData de Devolução: %s", livro.getNome(), livro.getCodLivro(), reserva.getDataEmprestimo(), reserva.getDataDevolucao());
 
+        }
+
+    }
+
+    public static void agendamentoReuniao(int codAluno) {
+
+        Scanner input = new Scanner(System.in);
+        int data;
+        int hora;
+        int dias = 0;
+
+        System.out.println("Para que dia deseja marcar o atendimento? ");
+        System.out.println("[1] Amanhã\n[2] Daqui uma semana\n[3] Daqui duas semanas\n[0] Cancelar");
+        do {
+            data = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+        } while (data < 0 || data > 3);
+
+        if (data != 0) {
+            switch (data) {
+                case 1 -> dias = 1;
+                case 2 -> dias = 7;
+                case 3 -> dias = 14;
+
+            }
+
+            System.out.println("Qual horário?");
+            System.out.println("[1] Manhã\n[2] Tarde\n[3] Noite");
+            do {
+                hora = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+            } while (hora < 1 || hora > 3);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+
+            Date date = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DATE, dias);
+
+
+            String dataHorario = dateFormat.format(calendar.getTime());
         }
 
     }

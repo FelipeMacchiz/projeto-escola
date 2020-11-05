@@ -5,6 +5,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
+          <factory-entry name="Projeto" value="f7f15e0c-608f-4f85-81b8-59de3827f491" />
           <factory-entry name="dados-escolar" value="f7f15e0c-608f-4f85-81b8-59de3827f491" />
           <factory-entry name="dados_escolar" value="f7f15e0c-608f-4f85-81b8-59de3827f491" />
         </datasource-mapping>
@@ -23,5 +24,6 @@
     <orderEntry type="library" name="sqlite-jdbc-3.32.3.2" level="project" />
     <orderEntry type="library" name="javax.persistence-api-2.2" level="project" />
     <orderEntry type="library" name="eclipselink-3.0.0-M1" level="project" />
+    <orderEntry type="library" name="eclipselink-2.7.7" level="project" />
   </component>
 </module>

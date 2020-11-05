@@ -120,7 +120,7 @@
     <foreign-key id="41" parent="8">
       <ColNames>codAluno</ColNames>
       <RefTableName>aluno</RefTableName>
-      <RefColNames>codCurso</RefColNames>
+      <RefColNames>codAluno</RefColNames>
     </foreign-key>
     <foreign-key id="42" parent="8">
       <ColNames>codCurso</ColNames>
@@ -376,7 +376,7 @@
     <foreign-key id="93" parent="18">
       <ColNames>codAluno</ColNames>
       <RefTableName>aluno</RefTableName>
-      <RefColNames>codCurso</RefColNames>
+      <RefColNames>codAluno</RefColNames>
     </foreign-key>
     <foreign-key id="94" parent="18">
       <ColNames>codDisciplina</ColNames>
