@@ -1,11 +1,12 @@
 package br.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "boleto")
 @TableGenerator(
-        name = "gerador_id",
+        name = "gerador_id_boleto",
         table = "sqlite_sequence",
         pkColumnName = "name",
         valueColumnName = "seq",
@@ -16,7 +17,7 @@ import javax.persistence.*;
 public class Boleto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "gerador_id")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "gerador_id_boleto")
     @Column(name = "codBoleto")
     private int codBoleto;
 
@@ -28,7 +29,7 @@ public class Boleto {
 
     @Column(name = "dataVencimento", nullable = false)
     @Temporal(TemporalType.DATE)
-    private String dataVenc;
+    private Date dataVenc;
 
     @Column(name = "valor", nullable = false)
     private double valor;
@@ -41,14 +42,14 @@ public class Boleto {
 
     public Boleto() {
     }
-    public Boleto(int codAluno, String dataVenc, double valor, double desconto, double valorPago) {
+    public Boleto(int codAluno, Date dataVenc, double valor, double desconto, double valorPago) {
         this.codAluno = codAluno;
         this.dataVenc = dataVenc;
         this.valor = valor;
         this.desconto = desconto;
         this.valorPago = valorPago;
     }
-    public Boleto(int codBoleto, int codAluno, String dataVenc, double valor, double desconto, double valorPago) {
+    public Boleto(int codBoleto, int codAluno, Date dataVenc, double valor, double desconto, double valorPago) {
         this.codBoleto = codBoleto;
         this.codAluno = codAluno;
         this.dataVenc = dataVenc;
@@ -71,10 +72,10 @@ public class Boleto {
         this.codAluno = codAluno;
     }
 
-    public String getDataVenc() {
+    public Date getDataVenc() {
         return dataVenc;
     }
-    public void setDataVenc(String dataVenc) {
+    public void setDataVenc(Date dataVenc) {
         this.dataVenc = dataVenc;
     }
 

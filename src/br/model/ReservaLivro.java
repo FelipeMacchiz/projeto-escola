@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "reservaLivro")
 @TableGenerator(
-        name = "gerador_id",
+        name = "gerador_id_reslivro",
         table = "sqlite_sequence",
         pkColumnName = "name",
         valueColumnName = "seq",
@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class ReservaLivro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "gerador_id")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "gerador_id_reslivro")
     @Column(name = "codReserva", nullable = false)
     private int codReserva;
 
