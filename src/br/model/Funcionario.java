@@ -1,6 +1,7 @@
 package br.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "funcionario")
@@ -31,17 +32,17 @@ public class Funcionario {
 
     @Column(name = "nasc", nullable = false)
     @Temporal(TemporalType.DATE)
-    private String nasc;
+    private Date nasc;
 
     public Funcionario() {
     }
-    public Funcionario(String nome, String rg, String cpf, String nasc) {
+    public Funcionario(String nome, String rg, String cpf, Date nasc) {
         this.nome = nome;
         this.rg = rg;
         this.cpf = cpf;
         this.nasc = nasc;
     }
-    public Funcionario(int codFuncionario, String nome, String rg, String cpf, String nasc) {
+    public Funcionario(int codFuncionario, String nome, String rg, String cpf, Date nasc) {
         this.codFuncionario = codFuncionario;
         this.nome = nome;
         this.rg = rg;
@@ -77,10 +78,10 @@ public class Funcionario {
         this.cpf = cpf;
     }
 
-    public String getNasc() {
+    public Date getNasc() {
         return nasc;
     }
-    public void setNasc(String nasc) {
+    public void setNasc(Date nasc) {
         this.nasc = nasc;
     }
 

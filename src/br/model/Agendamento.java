@@ -1,6 +1,7 @@
 package br.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "agendamento")
@@ -34,16 +35,16 @@ public class Agendamento {
 
     @Column(name = "horario", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private String horario;
+    private Date horario;
 
     public Agendamento() {
     }
-    public Agendamento(int codServico, int codAluno, String horario) {
+    public Agendamento(int codServico, int codAluno, Date horario) {
         this.codServico = codServico;
         this.codAluno = codAluno;
         this.horario = horario;
     }
-    public Agendamento(int codAgendamento, int codServico, int codAluno, String horario) {
+    public Agendamento(int codAgendamento, int codServico, int codAluno, Date horario) {
         this.codAgendamento = codAgendamento;
         this.codServico = codServico;
         this.codAluno = codAluno;
@@ -71,10 +72,10 @@ public class Agendamento {
         this.codAluno = codAluno;
     }
 
-    public String getHorario() {
+    public Date getHorario() {
         return horario;
     }
-    public void setHorario(String horario) {
+    public void setHorario(Date horario) {
         this.horario = horario;
     }
 

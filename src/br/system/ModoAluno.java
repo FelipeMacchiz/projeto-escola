@@ -148,10 +148,9 @@ public class ModoAluno {
             calendar.setTime(date);
             calendar.add(Calendar.DATE, 7);
 
-            String dataEmprestimo = dateFormat.format(date);
-            String dataDevolucao = dateFormat.format(calendar.getTime());
+            Date dataDevolucao = calendar.getTime();
 
-            ReservaLivro reserva = new ReservaLivro(codAluno, codLivro, dataEmprestimo, dataDevolucao);
+            ReservaLivro reserva = new ReservaLivro(codAluno, codLivro, date, dataDevolucao);
             reservaLivroDAO.salvar(reserva);
 
             // sout done
