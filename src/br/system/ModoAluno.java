@@ -3,7 +3,7 @@ package br.system;
 import br.dao.*;
 import br.model.*;
 
-import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -23,19 +23,23 @@ public class ModoAluno {
         * sout *
         * * * */
         for (Curso c : cursoList) {
-            System.out.println(c.getNomeCurso());
+            System.out.printf("[%02d] %s %n", c.getCodCurso(), c.getNomeCurso());
         }
 
-        System.out.println("Deseja ver as disciplinas de determinado curso? (1. Sim  0. Não");
         do {
+            System.out.print("Deseja ver as disciplinas de determinado curso (1. Sim  0. Não): ");
             verDisciplinas = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+            if (verDisciplinas < 0 || verDisciplinas > 1)
+                System.out.println("Digite novamente.");
         } while (verDisciplinas < 0 || verDisciplinas > 1);
 
         if (verDisciplinas == 1) {
 
-            System.out.print("Selecione o curso que deseja visualizar de acordo com o índice (0. Cancelar): ");
             do {
+                System.out.print("Selecione o curso que deseja visualizar de acordo com o índice (0. Cancelar): ");
                 selecionarCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+                if (selecionarCurso < 0 || selecionarCurso > cursoList.size())
+                    System.out.println("Digite novamente.");
             } while (selecionarCurso < 0 || selecionarCurso > cursoList.size());
 
             if (selecionarCurso != 0) {
@@ -106,11 +110,9 @@ public class ModoAluno {
             }
         }
 
-        /* * * *
-         * sout *
-         * * * */
+        // sout done
         for (Nota n : notas) {
-            System.out.println(n.getCodNota());
+            System.out.printf("- %.1f %n", n.getNota());
         }
 
     }
@@ -125,11 +127,9 @@ public class ModoAluno {
 
         int codLivro;
 
-        /* * * *
-         * sout *
-         * * * */
+        // sout done
         for (Livro l : livroList) {
-            System.out.println(l.getNome());
+            System.out.printf("[%02d] %s %n", l.getCodLivro(), l.getNome());
         }
 
         System.out.println("Escolha um livro para reservar (0. Cancelar): ");
@@ -141,7 +141,7 @@ public class ModoAluno {
 
             Livro livro = livroDAO.buscarPorId(codLivro);
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
             Date date = new Date();
             Calendar calendar = Calendar.getInstance();
@@ -154,7 +154,7 @@ public class ModoAluno {
             reservaLivroDAO.salvar(reserva);
 
             // sout done
-            System.out.printf("Reserva Feita! %nLivro: %s [%04d] %nData de Emprestimo: %s %nData de Devolução: %s", livro.getNome(), livro.getCodLivro(), reserva.getDataEmprestimo(), reserva.getDataDevolucao());
+            System.out.printf("Reserva Feita! %nLivro: %s [%04d] %nData de Emprestimo: %s %nData de Devolução: %s", livro.getNome(), livro.getCodLivro(), sdf.format(reserva.getDataEmprestimo()), sdf.format(reserva.getDataDevolucao()));
 
         }
 
@@ -187,15 +187,12 @@ public class ModoAluno {
                 hora = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
             } while (hora < 1 || hora > 3);
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-
             Date date = new Date();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             calendar.add(Calendar.DATE, dias);
 
-
-            String dataHorario = dateFormat.format(calendar.getTime());
+            Date dataHorario = calendar.getTime();
         }
 
     }

@@ -23,13 +23,12 @@ public abstract class GenericDAO<T> implements DAO<T> {
 		entityManager = emf.createEntityManager();
 	}
 
-	public T salvar(T entidade) {
+	public void salvar(T entidade) {
 		EntityTransaction t = entityManager.getTransaction();
 		t.begin();
 		entityManager.persist(entidade);
 		entityManager.flush();
 		t.commit();
-		return entidade;
 	}
 
 	public void apagar(Integer id) {
