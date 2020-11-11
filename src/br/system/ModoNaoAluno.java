@@ -1,5 +1,21 @@
 package br.system;
 
-public class ModoNaoAluno {
+import java.util.Scanner;
 
-}
+public class ModoNaoAluno {
+	public static void cadastroAluno() {
+		
+		
+		
+	}
+	
+	
+	public static void consultaCursos() {
+		
+		
+	}
+		
+	}
+	
+	
+
