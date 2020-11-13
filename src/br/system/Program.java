@@ -7,7 +7,7 @@ public class Program {
         // ModoAluno.consultaCursos();
         // ModoAluno.consultaNotas(1);
         // ModoAluno.reservarLivros(2);
-        ModoAluno.agendamentoReuniao(1);
+        // ModoAluno.agendamentoReuniao(1);
 
     }
 
