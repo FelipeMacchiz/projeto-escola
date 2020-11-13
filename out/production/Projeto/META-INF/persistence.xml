@@ -4,10 +4,13 @@
 
 		<class>br.model.Agendamento</class>
 		<class>br.model.Aluno</class>
+		<class>br.model.AlunoCurso</class>
 		<class>br.model.Boleto</class>
 		<class>br.model.Curso</class>
 		<class>br.model.CursoDisciplina</class>
 		<class>br.model.Departamento</class>
+		<class>br.model.DepFuncionario</class>
+		<class>br.model.DepServico</class>
 		<class>br.model.Disciplina</class>
 		<class>br.model.Funcionario</class>
 		<class>br.model.Livro</class>

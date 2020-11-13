@@ -1,7 +1,6 @@
 package br.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "boleto")
@@ -28,8 +27,7 @@ public class Boleto {
     private int codAluno;
 
     @Column(name = "dataVencimento", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date dataVenc;
+    private String dataVenc;
 
     @Column(name = "valor", nullable = false)
     private double valor;
@@ -42,14 +40,14 @@ public class Boleto {
 
     public Boleto() {
     }
-    public Boleto(int codAluno, Date dataVenc, double valor, double desconto, double valorPago) {
+    public Boleto(int codAluno, String dataVenc, double valor, double desconto, double valorPago) {
         this.codAluno = codAluno;
         this.dataVenc = dataVenc;
         this.valor = valor;
         this.desconto = desconto;
         this.valorPago = valorPago;
     }
-    public Boleto(int codBoleto, int codAluno, Date dataVenc, double valor, double desconto, double valorPago) {
+    public Boleto(int codBoleto, int codAluno, String dataVenc, double valor, double desconto, double valorPago) {
         this.codBoleto = codBoleto;
         this.codAluno = codAluno;
         this.dataVenc = dataVenc;
@@ -72,10 +70,10 @@ public class Boleto {
         this.codAluno = codAluno;
     }
 
-    public Date getDataVenc() {
+    public String getDataVenc() {
         return dataVenc;
     }
-    public void setDataVenc(Date dataVenc) {
+    public void setDataVenc(String dataVenc) {
         this.dataVenc = dataVenc;
     }
 
