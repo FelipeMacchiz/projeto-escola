@@ -75,10 +75,10 @@ public class ModoAdmin {
 		do {
 			System.out.println("ANO");
 			ano = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-			if (ano < anoHoje){
+			if (ano > anoHoje){
 				System.out.println("Número invalido");
 			}
-		}while( ano < anoHoje);
+		}while( ano > anoHoje);
 
 		DepartamentoDAO departamentoDAO = new DepartamentoDAO();
 		List<Departamento> departamentoList = departamentoDAO.listar();
@@ -111,6 +111,8 @@ public class ModoAdmin {
 		funcionarioDAO.salvar(funcionario);
 		DepFuncionarioDAO depFuncionarioDAO = new DepFuncionarioDAO();
 		depFuncionarioDAO.salvar(new DepFuncionario(cod));
+
+		System.out.println("PROCESSO CONCLUÍDO COM SUCESSO");
 	}
 
 }
