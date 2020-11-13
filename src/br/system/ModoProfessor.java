@@ -88,5 +88,43 @@ public class ModoProfessor {
         }
 
     }
+    public static void consultarAluno() {
+
+        Scanner input = new Scanner(System.in);
+
+        AlunoDAO alunoDAO = new AlunoDAO();
+        CursoDAO cursoDAO = new CursoDAO();
+        AlunoCursoDAO  alunoCursoDAO = new AlunoCursoDAO();
+        List<Curso> cursoList = cursoDAO.listar();
+
+        int codCurso;
+
+        for (Curso c : cursoList) {
+            System.out.println(c.getNomeCurso());
+        }
+
+        System.out.println("Selecione o Curso (0. Cancelar): ");
+        do {
+            codCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+        } while (codCurso < 0 || codCurso> cursoList.size());
+
+        if (codCurso !=0){
+
+            CursoDisciplinaDAO cursoDisciplinaDAO = new CursoDisciplinaDAO();
+            DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+            AlunoCursoDAO alunoCursoDAO = new AlunoCursoDAO();
+            AlunoDAO alunoDAO = new AlunoDAO();
+
+            List<CursoDisciplina> cursoDisciplinaList = cursoDisciplinaDAO.listar();
+            List<Aluno> alunos = new ArrayList<>();
+
+            for (CursoDisciplina c : cursoDisciplinaList) {
+                if (c.getCodCurso() == codCurso) {
+                    int idDisciplina = c.getCodDisciplina();
+                    Disciplina disciplina = disciplinaDAO.buscarPorId(idDisciplina);
+                    disciplinas.add(disciplina);
+                }
+            }
+    }
 
 }
