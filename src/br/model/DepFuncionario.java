@@ -15,12 +15,6 @@ import javax.persistence.*;
 )
 public class DepFuncionario {
 
-    @JoinColumn(
-            foreignKey = @ForeignKey(name = "codDepartamento", value = ConstraintMode.NO_CONSTRAINT)
-    )
-    @Column(name = "codDepartamento", nullable = false)
-    private int codDepartamento;
-
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "gerador_id_depfun")
     @JoinColumn(
@@ -28,6 +22,12 @@ public class DepFuncionario {
     )
     @Column(name = "codFuncionario", nullable = false)
     private int codFuncionario;
+
+    @JoinColumn(
+            foreignKey = @ForeignKey(name = "codDepartamento", value = ConstraintMode.NO_CONSTRAINT)
+    )
+    @Column(name = "codDepartamento", nullable = false)
+    private int codDepartamento;
 
     public DepFuncionario() {
     }
