@@ -4,10 +4,13 @@
 
 		<class>br.model.Agendamento</class>
 		<class>br.model.Aluno</class>
+		<class>br.model.AlunoCurso</class>
 		<class>br.model.Boleto</class>
 		<class>br.model.Curso</class>
 		<class>br.model.CursoDisciplina</class>
 		<class>br.model.Departamento</class>
+		<class>br.model.DepFuncionario</class>
+		<class>br.model.DepServico</class>
 		<class>br.model.Disciplina</class>
 		<class>br.model.Funcionario</class>
 		<class>br.model.Livro</class>
@@ -19,7 +22,7 @@
 		<properties>
 		
 			<property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:sqlite:C:\\Users\\felip\\Documents\\UP\\sem-2\\dev-software\\bim-2\\trabalho2bim\\projeto\\files\\dados_escolar.db"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlite:C:\\Users\\gusta\\OneDrive\\Documentos\\GitHub\\projeto-faculdade\\files\\dados_escolar.db"/>
 		
 		    <property name="hibernate.hbm2ddl.auto" value="create"/>
 			<property name="hibernate.show_sql" value="true"/>
