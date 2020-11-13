@@ -1,7 +1,6 @@
 package br.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "reservaLivro")
@@ -34,22 +33,20 @@ public class ReservaLivro {
     private int codLivro;
 
     @Column(name = "dataEmprestimo", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date dataEmprestimo;
+    private String dataEmprestimo;
 
     @Column(name = "dataDevolucao", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date dataDevolucao;
+    private String dataDevolucao;
 
     public ReservaLivro() {
     }
-    public ReservaLivro(int codAluno, int codLivro, Date dataEmprestimo, Date dataDevolucao) {
+    public ReservaLivro(int codAluno, int codLivro, String dataEmprestimo, String dataDevolucao) {
         this.codAluno = codAluno;
         this.codLivro = codLivro;
         this.dataEmprestimo = dataEmprestimo;
         this.dataDevolucao = dataDevolucao;
     }
-    public ReservaLivro(int codReserva, int codAluno, int codLivro, Date dataEmprestimo, Date dataDevolucao) {
+    public ReservaLivro(int codReserva, int codAluno, int codLivro, String dataEmprestimo, String dataDevolucao) {
         this.codReserva = codReserva;
         this.codAluno = codAluno;
         this.codLivro = codLivro;
@@ -78,17 +75,17 @@ public class ReservaLivro {
         this.codLivro = codLivro;
     }
 
-    public Date getDataEmprestimo() {
+    public String getDataEmprestimo() {
         return dataEmprestimo;
     }
-    public void setDataEmprestimo(Date dataEmprestimo) {
+    public void setDataEmprestimo(String dataEmprestimo) {
         this.dataEmprestimo = dataEmprestimo;
     }
 
-    public Date getDataDevolucao() {
+    public String getDataDevolucao() {
         return dataDevolucao;
     }
-    public void setDataDevolucao(Date dataDevolucao) {
+    public void setDataDevolucao(String dataDevolucao) {
         this.dataDevolucao = dataDevolucao;
     }
 
