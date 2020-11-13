@@ -1,7 +1,9 @@
 package br.system;
 
+import br.dao.DepFuncionarioDAO;
 import br.dao.DepartamentoDAO;
 import br.dao.FuncionarioDAO;
+import br.model.DepFuncionario;
 import br.model.Departamento;
 import br.model.Funcionario;
 
@@ -106,6 +108,9 @@ public class ModoAdmin {
 
 		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 		Funcionario funcionario = new Funcionario(nome, RG, CPF, nasc);
+		funcionarioDAO.salvar(funcionario);
+		DepFuncionarioDAO depFuncionarioDAO = new DepFuncionarioDAO();
+		depFuncionarioDAO.salvar(new DepFuncionario(cod));
 	}
 
 }
