@@ -191,9 +191,8 @@ public class ModoAluno {
 
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-            Date date = new Date();
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
+            calendar.setTime(new Date());
             calendar.add(Calendar.DATE, dias);
             switch (hora) {
                 case 1 -> calendar.set(Calendar.HOUR_OF_DAY, 9);
@@ -211,7 +210,26 @@ public class ModoAluno {
 
         }
 
-        
+    }
+
+    public static void atualizarDados(int codAluno) {
+
+        Scanner input = new Scanner(System.in);
+        AlunoDAO alunoDAO = new AlunoDAO();
+        Aluno aluno = alunoDAO.buscarPorId(codAluno);
+
+        System.out.printf("Atualize os dados de %s (Para manter os dados atuais, deixe em branco)%n", aluno.getNome());
+        System.out.printf("| Nome: %s", aluno.getNome());
+        String nome = input.nextLine();
+        if (nome.equals("")){
+            nome = aluno.getNome();
+        }
+
+        System.out.printf("| RG: %s", aluno.getRg());
+        String rg = input.nextLine();
+        if (rg.equals("")) {
+
+        }
 
     }
 
