@@ -15,17 +15,14 @@ import javax.persistence.*;
 )
 public class DepFuncionario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "gerador_id_depfun")
-    @Column(name = "codDepFuncionario", nullable = false)
-    private int codDepFuncionario;
-
     @JoinColumn(
             foreignKey = @ForeignKey(name = "codDepartamento", value = ConstraintMode.NO_CONSTRAINT)
     )
     @Column(name = "codDepartamento", nullable = false)
     private int codDepartamento;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "gerador_id_depfun")
     @JoinColumn(
             foreignKey = @ForeignKey(name = "codFuncionario", value = ConstraintMode.NO_CONSTRAINT)
     )
@@ -34,21 +31,12 @@ public class DepFuncionario {
 
     public DepFuncionario() {
     }
+    public DepFuncionario(int codDepartamento) {
+        this.codDepartamento = codDepartamento;
+    }
     public DepFuncionario(int codDepartamento, int codFuncionario) {
         this.codDepartamento = codDepartamento;
         this.codFuncionario = codFuncionario;
-    }
-    public DepFuncionario(int codDepFuncionario, int codDepartamento, int codFuncionario) {
-        this.codDepFuncionario = codDepFuncionario;
-        this.codDepartamento = codDepartamento;
-        this.codFuncionario = codFuncionario;
-    }
-
-    public int getCodDepFuncionario() {
-        return codDepFuncionario;
-    }
-    public void setCodDepFuncionario(int codDepFuncionario) {
-        this.codDepFuncionario = codDepFuncionario;
     }
 
     public int getCodDepartamento() {
