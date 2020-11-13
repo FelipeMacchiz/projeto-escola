@@ -92,9 +92,8 @@ public class ModoProfessor {
 
         Scanner input = new Scanner(System.in);
 
-        AlunoDAO alunoDAO = new AlunoDAO();
+
         CursoDAO cursoDAO = new CursoDAO();
-        AlunoCursoDAO  alunoCursoDAO = new AlunoCursoDAO();
         List<Curso> cursoList = cursoDAO.listar();
 
         int codCurso;
@@ -110,21 +109,26 @@ public class ModoProfessor {
 
         if (codCurso !=0){
 
-            CursoDisciplinaDAO cursoDisciplinaDAO = new CursoDisciplinaDAO();
-            DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
             AlunoCursoDAO alunoCursoDAO = new AlunoCursoDAO();
             AlunoDAO alunoDAO = new AlunoDAO();
+            List<AlunoCurso> alunoCursoList = alunoCursoDAO.listar();
+            List<Integer> codAlunoList =new ArrayList<>();
+            List<Aluno> alunoList = new ArrayList<>();
 
-            List<CursoDisciplina> cursoDisciplinaList = cursoDisciplinaDAO.listar();
-            List<Aluno> alunos = new ArrayList<>();
-
-            for (CursoDisciplina c : cursoDisciplinaList) {
-                if (c.getCodCurso() == codCurso) {
-                    int idDisciplina = c.getCodDisciplina();
-                    Disciplina disciplina = disciplinaDAO.buscarPorId(idDisciplina);
-                    disciplinas.add(disciplina);
+            for (AlunoCurso a : alunoCursoList) {
+                if (a.getCodCurso()==codCurso){
+                    codAlunoList.add(a.getCodAluno());
                 }
             }
+
+            for (int codAluno:codAlunoList) {
+                alunoList.add(alunoDAO.buscarPorId(codAluno));
+            }
+
+            for (Aluno a: alunoList) {
+                System.out.printf("- %03d, %s %n",a.getCodAluno(),a.getNome());
+            }
+        }
     }
 
 
