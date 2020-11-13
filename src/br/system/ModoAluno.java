@@ -112,7 +112,7 @@ public class ModoAluno {
 
         // sout done
         for (Nota n : notas) {
-            System.out.printf("- %.1f %n", n.getNota());
+            System.out.printf("- %.1f = %d %n", n.getNota(), n.getCodDisciplina());
         }
 
     }
@@ -141,20 +141,21 @@ public class ModoAluno {
 
             Livro livro = livroDAO.buscarPorId(codLivro);
 
-            DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
             Date date = new Date();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             calendar.add(Calendar.DATE, 7);
 
-            Date dataDevolucao = calendar.getTime();
+            String dataEmprestimo = dateFormat.format(date);
+            String dataDevolucao = dateFormat.format(calendar.getTime());
 
-            ReservaLivro reserva = new ReservaLivro(codAluno, codLivro, date, dataDevolucao);
+            ReservaLivro reserva = new ReservaLivro(codAluno, codLivro, dataEmprestimo, dataDevolucao);
             reservaLivroDAO.salvar(reserva);
 
             // sout done
-            System.out.printf("Reserva Feita! %nLivro: %s [%04d] %nData de Emprestimo: %s %nData de Devolução: %s", livro.getNome(), livro.getCodLivro(), sdf.format(reserva.getDataEmprestimo()), sdf.format(reserva.getDataDevolucao()));
+            System.out.printf("Reserva Feita! %nLivro: %s [%04d] %nData de Emprestimo: %s %nData de Devolução: %s", livro.getNome(), livro.getCodLivro(), reserva.getDataEmprestimo(), reserva.getDataDevolucao());
 
         }
 
@@ -163,6 +164,7 @@ public class ModoAluno {
     public static void agendamentoReuniao(int codAluno) {
 
         Scanner input = new Scanner(System.in);
+        AgendamentoDAO agendamentoDAO = new AgendamentoDAO();
         int data;
         int hora;
         int dias = 0;
@@ -187,13 +189,29 @@ public class ModoAluno {
                 hora = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
             } while (hora < 1 || hora > 3);
 
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
             Date date = new Date();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             calendar.add(Calendar.DATE, dias);
+            switch (hora) {
+                case 1 -> calendar.set(Calendar.HOUR_OF_DAY, 9);
+                case 2 -> calendar.set(Calendar.HOUR_OF_DAY, 16);
+                case 3 -> calendar.set(Calendar.HOUR_OF_DAY, 19);
+            }
+            calendar.set(Calendar.MINUTE, 0);
 
-            Date dataHorario = calendar.getTime();
+            String dataHorario = dateFormat.format(calendar.getTime());
+
+            Agendamento agendamento = new Agendamento(1, codAluno, dataHorario);
+            agendamentoDAO.salvar(agendamento);
+
+            System.out.printf("Agendamento marcado para %s!%n", dataHorario);
+
         }
+
+        
 
     }
 

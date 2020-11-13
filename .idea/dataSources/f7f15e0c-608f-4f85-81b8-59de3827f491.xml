@@ -90,7 +90,7 @@
     </column>
     <column id="35" parent="7" name="nasc">
       <Position>5</Position>
-      <DataType>DATE|0s</DataType>
+      <DataType>TEXT|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <key id="36" parent="7">
@@ -326,7 +326,7 @@
     </column>
     <column id="83" parent="16" name="nasc">
       <Position>5</Position>
-      <DataType>DATE|0s</DataType>
+      <DataType>TEXT|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <key id="84" parent="16">
