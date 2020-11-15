@@ -4,6 +4,7 @@ import br.dao.*;
 import br.model.*;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -218,18 +219,79 @@ public class ModoAluno {
         AlunoDAO alunoDAO = new AlunoDAO();
         Aluno aluno = alunoDAO.buscarPorId(codAluno);
 
-        System.out.printf("Atualize os dados de %s (Para manter os dados atuais, deixe em branco)%n", aluno.getNome());
-        System.out.printf("| Nome: %s", aluno.getNome());
+        System.out.printf("Atualize os dados de %s (<!> Para manter os dados atuais, deixe em branco)%n", aluno.getNome());
+        System.out.printf("| Nome: %s %nNovo nome: ", aluno.getNome());
         String nome = input.nextLine();
         if (nome.equals("")){
             nome = aluno.getNome();
         }
 
-        System.out.printf("| RG: %s", aluno.getRg());
+        System.out.printf("| RG: %s %nNovo RG: ", aluno.getRg());
         String rg = input.nextLine();
         if (rg.equals("")) {
-
+            rg = aluno.getRg();
         }
+
+        System.out.printf("| CPF: %s %nNovo CPF: ", aluno.getCpf());
+        String cpf = input.nextLine();
+        if (cpf.equals("")) {
+            cpf = aluno.getCpf();
+        }
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String nasc = aluno.getNasc();
+        Date dateNasc = new Date();
+        try {
+            dateNasc = dateFormat.parse(nasc);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateNasc);
+
+        Calendar hoje = Calendar.getInstance();
+        hoje.setTime(new Date());
+
+        System.out.printf("| Data de Nascimento: %s %n", aluno.getNasc());
+        String dia;
+        do {
+            System.out.print("- Dia: ");
+            dia = input.nextLine().replaceAll("[^0-9]", "");
+            if (dia.equals("")) {
+                dia = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+            }
+        } while (Integer.parseInt(dia) < 1 || Integer.parseInt(dia) > 31);
+
+        String mes;
+        do {
+            System.out.print("- Mês: ");
+            mes = input.nextLine().replaceAll("[^0-9]", "");
+            if (mes.equals("")) {
+                mes = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+            }
+        } while (Integer.parseInt(mes) < 1 || Integer.parseInt(mes) > 12);
+
+        String ano;
+        do {
+            System.out.print("- Ano: ");
+            ano = input.nextLine().replaceAll("[^0-9]", "");
+            if (ano.equals("")) {
+                ano = String.valueOf(calendar.get(Calendar.YEAR));
+            }
+        } while (Integer.parseInt(ano) > hoje.get(Calendar.YEAR));
+
+        nasc = String.format("%s/%s/%s", dia, mes, ano);
+
+        Aluno alunoAtualizado = new Aluno(codAluno, nome, rg, cpf, nasc);
+        alunoDAO.atualizar(alunoAtualizado);
+
+        System.out.printf("-x- ALUNO ATUALIZADO! -x-%n" +
+                "Matrícula: %08d%n" +
+                "Nome: %s%n" +
+                "RG: %s%n" +
+                "CPF: %s%n" +
+                "Data de Nascimento: %s%n",
+                aluno.getCodAluno(), aluno.getNome(), aluno.getRg(), aluno.getCpf(), aluno.getNasc());
 
     }
 
