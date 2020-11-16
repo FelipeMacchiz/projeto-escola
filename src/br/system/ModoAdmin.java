@@ -139,10 +139,21 @@ public class ModoAdmin {
 		System.out.println("Informe o nome da disciplina");
 		String nome = input.nextLine();
 
+		CursoDAO cursoDAO = new CursoDAO();
+		List<Curso> cursoList = cursoDAO.listar();
+		for (Curso c : cursoList) {
+			System.out.printf("[%2d] %s %n", c.getCodCurso(), c.getNomeCurso());
+		}
+
+		System.out.println("----|ESCOLHA SEU CURSO|----");
+		int cod = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+
 		DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 		Disciplina disciplina = new Disciplina();
 		disciplinaDAO.salvar(disciplina);
-
+		CursoDisciplinaDAO cursoDisciplinaDAO = new CursoDisciplinaDAO();
+		CursoDisciplina cursoDisciplina = new CursoDisciplina(cod);
+		cursoDisciplinaDAO.salvar(cursoDisciplina);
 	}
 
 
@@ -156,7 +167,7 @@ public class ModoAdmin {
 		String nome = input.nextLine();
 
 		LivroDAO livroDAO = new LivroDAO();
-		Livro livro = new Livro();
+		Livro livro = new Livro(nome);
 		livroDAO.salvar(livro);
 
 	}
@@ -172,7 +183,7 @@ public class ModoAdmin {
 		String nome = input.nextLine();
 
 		ServicoDAO servicoDAO = new ServicoDAO();
-		Servico servico = new Servico();
+		Servico servico = new Servico(nome);
 		servicoDAO.salvar(servico);
 	}
 
