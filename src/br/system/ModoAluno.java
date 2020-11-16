@@ -10,6 +10,16 @@ import java.util.*;
 
 public class ModoAluno {
 
+    public static final String RESET = "\u001B[0m";
+    public static final String BLACK = "\u001B[30m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String PURPLE = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String WHITE = "\u001B[37m";
+
     public static void consultaCursos() {
 
         Scanner input = new Scanner(System.in);
@@ -18,56 +28,51 @@ public class ModoAluno {
         List<Curso> cursoList = cursoDAO.listar();
 
         int verDisciplinas;
-        int selecionarCurso;
+        int codCurso;
 
-        /* * * *
-        * sout *
-        * * * */
+        System.out.printf("%s= CURSOS%s%n", CYAN, RESET);
         for (Curso c : cursoList) {
-            System.out.printf("[%02d] %s %n", c.getCodCurso(), c.getNomeCurso());
+            System.out.printf("%s[%02d] %s %s%n", CYAN, c.getCodCurso(), c.getNomeCurso(), RESET);
         }
 
+        System.out.printf("%sDeseja ver mais detalhes de determinado curso? [1] Sim  [0] Não%s%n", YELLOW, RESET);
         do {
-            System.out.print("Deseja ver as disciplinas de determinado curso (1. Sim  0. Não): ");
+            System.out.print("Selecione: ");
             verDisciplinas = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
             if (verDisciplinas < 0 || verDisciplinas > 1)
-                System.out.println("Digite novamente.");
+                System.out.printf("%s<!> Digite novamente%s%n", RED, RESET);
         } while (verDisciplinas < 0 || verDisciplinas > 1);
 
         if (verDisciplinas == 1) {
 
             do {
-                System.out.print("Selecione o curso que deseja visualizar de acordo com o índice (0. Cancelar): ");
-                selecionarCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-                if (selecionarCurso < 0 || selecionarCurso > cursoList.size())
-                    System.out.println("Digite novamente.");
-            } while (selecionarCurso < 0 || selecionarCurso > cursoList.size());
+                System.out.print("Selecione o curso: ");
+                codCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+                if (codCurso < 0 || codCurso > cursoList.size())
+                    System.out.printf("%s<!> Digite novamente%s%n", RED, RESET);
+            } while (codCurso < 0 || codCurso > cursoList.size());
 
-            if (selecionarCurso != 0) {
+            CursoDisciplinaDAO cursoDisciplinaDAO = new CursoDisciplinaDAO();
+            DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 
-                CursoDisciplinaDAO cursoDisciplinaDAO = new CursoDisciplinaDAO();
-                DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+            Curso curso = cursoDAO.buscarPorId(codCurso);
 
-                List<CursoDisciplina> cursoDisciplinaList = cursoDisciplinaDAO.listar();
+            List<CursoDisciplina> cursoDisciplinaList = cursoDisciplinaDAO.listar();
 
-                List<Disciplina> disciplinasCurso = new ArrayList<>();
+            List<Disciplina> disciplinasCurso = new ArrayList<>();
 
-                for (CursoDisciplina c : cursoDisciplinaList) {
+            for (CursoDisciplina c : cursoDisciplinaList) {
 
-                    if (c.getCodCurso() == selecionarCurso) {
-                        Disciplina disciplina = disciplinaDAO.buscarPorId(c.getCodDisciplina());
-                        disciplinasCurso.add(disciplina);
-                    }
-
+                if (c.getCodCurso() == codCurso) {
+                    Disciplina disciplina = disciplinaDAO.buscarPorId(c.getCodDisciplina());
+                    disciplinasCurso.add(disciplina);
                 }
 
-                /* * * *
-                 * sout *
-                 * * * */
-                for (Disciplina d : disciplinasCurso) {
-                    System.out.println(d.getNome());
-                }
+            }
 
+            System.out.printf("%n%s= NOME DO CURSO: %s%nDURAÇÃO: %s anos%nDISCIPLINAS: %s%n", CYAN, curso.getNomeCurso(), curso.getDuracao(), RESET);
+            for (Disciplina d : disciplinasCurso) {
+                System.out.printf("%s- %s%s%n", CYAN, d.getNome(), RESET);
             }
 
         }
@@ -292,6 +297,17 @@ public class ModoAluno {
                 "CPF: %s%n" +
                 "Data de Nascimento: %s%n",
                 aluno.getCodAluno(), aluno.getNome(), aluno.getRg(), aluno.getCpf(), aluno.getNasc());
+
+    }
+
+    public static void consultarServicos() {
+
+        ServicoDAO servicoDAO = new ServicoDAO();
+        List<Servico> servicoList = servicoDAO.listar();
+
+        for (Servico s : servicoList) {
+            System.out.printf("= %02d - %s %n", s.getCodServico(), s.getNome());
+        }
 
     }
 
