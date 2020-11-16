@@ -15,15 +15,6 @@ import javax.persistence.*;
 )
 public class CursoDisciplina {
 
-    @Column(name = "codCursoDisciplina", nullable = false)
-    private int codCursoDisciplina;
-
-    @JoinColumn(
-            foreignKey = @ForeignKey(name = "codCurso", value = ConstraintMode.NO_CONSTRAINT)
-    )
-    @Column(name = "codCurso", nullable = false)
-    private int codCurso;
-
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "gerador_id_cursodisc")
     @JoinColumn(
@@ -32,23 +23,20 @@ public class CursoDisciplina {
     @Column(name = "codDisciplina", nullable = false)
     private int codDisciplina;
 
+    @JoinColumn(
+            foreignKey = @ForeignKey(name = "codCurso", value = ConstraintMode.NO_CONSTRAINT)
+    )
+    @Column(name = "codCurso", nullable = false)
+    private int codCurso;
+
     public CursoDisciplina() {
     }
     public CursoDisciplina(int codCurso) {
         this.codCurso = codCurso;
-        this.codCursoDisciplina = 0;
     }
-    public CursoDisciplina(int codCurso, int codDisciplina) {
-        this.codCursoDisciplina = 0;
-        this.codCurso = codCurso;
+    public CursoDisciplina(int codDisciplina, int codCurso) {
         this.codDisciplina = codDisciplina;
-    }
-
-    public int getCodCursoDisciplina() {
-        return codCursoDisciplina;
-    }
-    public void setCodCursoDisciplina(int codCursoDisciplina) {
-        this.codCursoDisciplina = codCursoDisciplina;
+        this.codCurso = codCurso;
     }
 
     public int getCodCurso() {
