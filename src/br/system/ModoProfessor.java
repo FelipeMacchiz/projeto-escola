@@ -89,4 +89,50 @@ public class ModoProfessor {
 
     }
 
+    public static void consultarAlunos() {
+
+        Scanner input = new Scanner(System.in);
+
+        CursoDAO cursoDAO = new CursoDAO();
+        List<Curso> cursoList = cursoDAO.listar();
+        int codCurso;
+
+        for (Curso c : cursoList) {
+            System.out.printf("[%2d] %s %n", c.getCodCurso(), c.getNomeCurso());
+        }
+        System.out.println("[00] Cancelar");
+
+        do {
+            System.out.print("Selecione o curso: ");
+            codCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+        } while (codCurso < 0 || codCurso > cursoList.size());
+
+        if (codCurso != 0) {
+
+            AlunoCursoDAO alunoCursoDAO = new AlunoCursoDAO();
+            AlunoDAO alunoDAO = new AlunoDAO();
+            Curso curso = cursoDAO.buscarPorId(codCurso);
+            List<AlunoCurso> alunoCursoList = alunoCursoDAO.listar();
+            List<Integer> codAlunoList = new ArrayList<>();
+            List<Aluno> alunoList = new ArrayList<>();
+
+            for (AlunoCurso a : alunoCursoList) {
+                if (a.getCodCurso() == codCurso) {
+                    codAlunoList.add(a.getCodAluno());
+                }
+            }
+
+            for (int codAluno : codAlunoList) {
+                alunoList.add(alunoDAO.buscarPorId(codAluno));
+            }
+
+            System.out.println("Lista de alunos do curso " + curso.getNomeCurso());
+            for (Aluno a : alunoList) {
+                System.out.printf("- %03d, %s %n", a.getCodAluno(), a.getNome());
+            }
+
+        }
+
+    }
+
 }
