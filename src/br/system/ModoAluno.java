@@ -300,15 +300,4 @@ public class ModoAluno {
 
     }
 
-    public static void consultarServicos() {
-
-        ServicoDAO servicoDAO = new ServicoDAO();
-        List<Servico> servicoList = servicoDAO.listar();
-
-        for (Servico s : servicoList) {
-            System.out.printf("= %02d - %s %n", s.getCodServico(), s.getNome());
-        }
-
-    }
-
 }
