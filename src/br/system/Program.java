@@ -6,7 +6,7 @@ public class Program {
 
         // ModoAluno.consultaCursos();
         //ModoAluno.reservarLivros(2);
-       ModoNaoAluno.cadastroAluno();
+       ModoNaoAluno.consultaCursos();
 
     }
 
