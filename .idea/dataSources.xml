@@ -18,5 +18,11 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/files/dados_escolar.db</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="SQLite - dados_escolar.db" uuid="1f1aa9c0-d610-48bb-ae52-153ab701ac1d">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\lucas\Documents\GitHub\projeto-faculdade\files\dados_escolar.db</jdbc-url>
+    </data-source>
   </component>
 </project>

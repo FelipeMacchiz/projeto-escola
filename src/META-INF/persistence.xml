@@ -22,7 +22,7 @@
 		<properties>
 		
 			<property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:sqlite:C:\\Users\\felip\\Documents\\UP\\sem-2\\dev-software\\bim-2\\trabalho2bim\\projeto\\files\\dados_escolar.db"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlite:C:\Users\lucas\Documents\GitHub\projeto-faculdade\files\dados_escolar.db"/>
 		
 		    <property name="hibernate.hbm2ddl.auto" value="create"/>
 			<property name="hibernate.show_sql" value="true"/>

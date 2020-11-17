@@ -1,9 +1,7 @@
 package br.system;
 
-import br.dao.DepartamentoDAO;
-import br.dao.FuncionarioDAO;
-import br.model.Departamento;
-import br.model.Funcionario;
+import br.dao.*;
+import br.model.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -56,27 +54,27 @@ public class ModoAdmin {
 
 		do {
 			System.out.println("DIA");
-			dia = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", "")) ;
-			if (dia > 30 || dia < 1){
+			dia = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+			if (dia > 30 || dia < 1) {
 				System.out.println("Número invalido");
 			}
-		}while(dia > 30 || dia < 1);
+		} while (dia > 30 || dia < 1);
 
 		do {
 			System.out.println("MÈS");
 			mes = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-			if (mes < 1 || mes > 12){
+			if (mes < 1 || mes > 12) {
 				System.out.println("Número invalido");
 			}
-		}while(mes < 1 || mes > 12);
+		} while (mes < 1 || mes > 12);
 
 		do {
 			System.out.println("ANO");
 			ano = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-			if (ano < anoHoje){
+			if (ano > anoHoje) {
 				System.out.println("Número invalido");
 			}
-		}while( ano < anoHoje);
+		} while (ano > anoHoje);
 
 		DepartamentoDAO departamentoDAO = new DepartamentoDAO();
 		List<Departamento> departamentoList = departamentoDAO.listar();
@@ -90,7 +88,7 @@ public class ModoAdmin {
 		do {
 			System.out.println("Digite o código da area");
 			cod = input.nextInt();
-		}while( cod < 0 || cod > departamentoList.size());
+		} while (cod < 0 || cod > departamentoList.size());
 
 
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -106,6 +104,87 @@ public class ModoAdmin {
 
 		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 		Funcionario funcionario = new Funcionario(nome, RG, CPF, nasc);
+		funcionarioDAO.salvar(funcionario);
+		DepFuncionarioDAO depFuncionarioDAO = new DepFuncionarioDAO();
+		depFuncionarioDAO.salvar(new DepFuncionario(cod));
+
+		System.out.println("PROCESSO CONCLUÍDO COM SUCESSO");
+	}
+
+
+	public static void cadastroCurso() {
+
+		Scanner input = new Scanner(System.in);
+
+		System.out.println("----|BEM VINDO AO CADASTRO DO CURSO|----");
+
+		System.out.println("Informe o nome do curso");
+		String nomeCurso = input.nextLine();
+
+		System.out.println("Qual a duração desse curso (em horas)");
+		int duracao = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+
+		CursoDAO cursoDAO = new CursoDAO();
+		Curso curso = new Curso(nomeCurso, duracao);
+		cursoDAO.salvar(curso);
+	}
+
+
+	public static void cadastroDisciplina(){
+
+		Scanner input = new Scanner(System.in);
+
+		System.out.println("----|BEM VINDO AO CADASTRO DA DISCIPLINA|----");
+
+		System.out.println("Informe o nome da disciplina");
+		String nome = input.nextLine();
+
+		CursoDAO cursoDAO = new CursoDAO();
+		List<Curso> cursoList = cursoDAO.listar();
+		for (Curso c : cursoList) {
+			System.out.printf("[%2d] %s %n", c.getCodCurso(), c.getNomeCurso());
+		}
+
+		System.out.println("----|ESCOLHA SEU CURSO|----");
+		int cod = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+
+		DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+		Disciplina disciplina = new Disciplina();
+		disciplinaDAO.salvar(disciplina);
+		CursoDisciplinaDAO cursoDisciplinaDAO = new CursoDisciplinaDAO();
+		CursoDisciplina cursoDisciplina = new CursoDisciplina(cod);
+		cursoDisciplinaDAO.salvar(cursoDisciplina);
+	}
+
+
+	public static void cadastroLivro(){
+
+		Scanner input = new Scanner(System.in);
+
+		System.out.println("----|BEM VINDO A AREÁ DE CADASTRO DO LIVRO|----");
+
+		System.out.println("Informe o nome do livro");
+		String nome = input.nextLine();
+
+		LivroDAO livroDAO = new LivroDAO();
+		Livro livro = new Livro(nome);
+		livroDAO.salvar(livro);
+
+	}
+
+
+	public static void cadastroServico(){
+
+		Scanner input = new Scanner(System.in);
+
+		System.out.println("----|BEM VINDO A AREÁ DE CADASTRO DO SERVIÇO|----");
+
+		System.out.println("Informe o nome do serviço");
+		String nome = input.nextLine();
+
+		ServicoDAO servicoDAO = new ServicoDAO();
+		Servico servico = new Servico(nome);
+		servicoDAO.salvar(servico);
 	}
 
 }

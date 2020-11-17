@@ -17,8 +17,11 @@ public class CursoDisciplina {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "gerador_id_cursodisc")
-    @Column(name = "codCursoDisciplina", nullable = false)
-    private int codCursoDisciplina;
+    @JoinColumn(
+            foreignKey = @ForeignKey(name = "codDisciplina", value = ConstraintMode.NO_CONSTRAINT)
+    )
+    @Column(name = "codDisciplina", nullable = false)
+    private int codDisciplina;
 
     @JoinColumn(
             foreignKey = @ForeignKey(name = "codCurso", value = ConstraintMode.NO_CONSTRAINT)
@@ -26,29 +29,14 @@ public class CursoDisciplina {
     @Column(name = "codCurso", nullable = false)
     private int codCurso;
 
-    @JoinColumn(
-            foreignKey = @ForeignKey(name = "codDisciplina", value = ConstraintMode.NO_CONSTRAINT)
-    )
-    @Column(name = "codDisciplina", nullable = false)
-    private int codDisciplina;
-
     public CursoDisciplina() {
     }
-    public CursoDisciplina(int codCurso, int codDisciplina) {
+    public CursoDisciplina(int codCurso) {
         this.codCurso = codCurso;
-        this.codDisciplina = codDisciplina;
     }
-    public CursoDisciplina(int codCursoDisciplina, int codCurso, int codDisciplina) {
-        this.codCursoDisciplina = codCursoDisciplina;
+    public CursoDisciplina(int codDisciplina, int codCurso) {
+        this.codDisciplina = codDisciplina;
         this.codCurso = codCurso;
-        this.codDisciplina = codDisciplina;
-    }
-
-    public int getCodCursoDisciplina() {
-        return codCursoDisciplina;
-    }
-    public void setCodCursoDisciplina(int codCursoDisciplina) {
-        this.codCursoDisciplina = codCursoDisciplina;
     }
 
     public int getCodCurso() {

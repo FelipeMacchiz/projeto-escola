@@ -17,9 +17,6 @@ public class AlunoCurso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "gerador_id_alunocurso")
-    @Column(name = "codAlunoCurso", nullable = false)
-    private int codAlunoCurso;
-
     @JoinColumn(
             foreignKey = @ForeignKey(name = "codAluno", value = ConstraintMode.NO_CONSTRAINT)
     )
@@ -34,21 +31,12 @@ public class AlunoCurso {
 
     public AlunoCurso() {
     }
+    public AlunoCurso(int codCurso) {
+        this.codCurso = codCurso;
+    }
     public AlunoCurso(int codAluno, int codCurso) {
         this.codAluno = codAluno;
         this.codCurso = codCurso;
-    }
-    public AlunoCurso(int codAlunoCurso, int codAluno, int codCurso) {
-        this.codAlunoCurso = codAlunoCurso;
-        this.codAluno = codAluno;
-        this.codCurso = codCurso;
-    }
-
-    public int getCodAlunoCurso() {
-        return codAlunoCurso;
-    }
-    public void setCodAlunoCurso(int codAlunoCurso) {
-        this.codAlunoCurso = codAlunoCurso;
     }
 
     public int getCodAluno() {
