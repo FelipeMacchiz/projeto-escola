@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ModoNaoAluno {
+
 	public static void cadastroAluno() {
 
 
