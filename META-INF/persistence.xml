@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="dados_escolar" transaction-type="RESOURCE_LOCAL">
+
+		<class>br.model.Agendamento</class>
+		<class>br.model.Aluno</class>
+		<class>br.model.AlunoCurso</class>
+		<class>br.model.Boleto</class>
+		<class>br.model.Curso</class>
+		<class>br.model.CursoDisciplina</class>
+		<class>br.model.Departamento</class>
+		<class>br.model.DepFuncionario</class>
+		<class>br.model.DepServico</class>
+		<class>br.model.Disciplina</class>
+		<class>br.model.Funcionario</class>
+		<class>br.model.Livro</class>
+		<class>br.model.Nota</class>
+		<class>br.model.ReservaLivro</class>
+		<class>br.model.Servico</class>
+
+		
+		<properties>
+		
+			<property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlite:C:\\Users\\felip\\Documents\\UP\\sem-2\\dev-software\\bim-2\\trabalho2bim\\projeto\\files\\dados_escolar.db"/>
+		
+		    <property name="hibernate.hbm2ddl.auto" value="create"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="false"/>
+		    <property name="eclipselink.target-database" value="Database"/>
+		    <property name="eclipselink.logging.level.event" value="OFF"/>
+		    <!-- OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINENR, FINEST, ALL -->
+			<property name="eclipselink.logging.level" value="off"/>
+		    
+		    <!--
+		    <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cadastro"/>
+			<property name="javax.persistence.jdbc.user" value="root"/>
+			<property name="javax.persistence.jdbc.password" value="master"/>
+			-->
+
+		</properties>
+	</persistence-unit>
+</persistence>

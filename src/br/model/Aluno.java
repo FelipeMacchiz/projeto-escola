@@ -9,7 +9,7 @@ import javax.persistence.*;
         table = "sqlite_sequence",
         pkColumnName = "name",
         valueColumnName = "seq",
-        pkColumnValue = "alunos",
+        pkColumnValue = "aluno",
         initialValue = 1,
         allocationSize = 1
 )
