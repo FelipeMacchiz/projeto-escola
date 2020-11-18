@@ -20,6 +20,8 @@ public class Program {
 
     public static void main(String[] args) {
 
+        ModoProfessor.consultaAgendamento();
+
         Scanner input = new Scanner(System.in);
         int modo;
 

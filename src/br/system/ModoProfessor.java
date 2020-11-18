@@ -3,9 +3,11 @@ package br.system;
 import br.dao.*;
 import br.model.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.*;
 
 public class ModoProfessor {
 
@@ -129,6 +131,42 @@ public class ModoProfessor {
             System.out.println("Lista de alunos do curso " + curso.getNomeCurso());
             for (Aluno a : alunoList) {
                 System.out.printf("- %03d, %s %n", a.getCodAluno(), a.getNome());
+            }
+
+        }
+
+    }
+
+    public static void consultaAgendamento() {
+
+        AgendamentoDAO agendamentoDAO = new AgendamentoDAO();
+        List<Agendamento> agendamentoList = agendamentoDAO.listar();
+
+        AlunoDAO alunoDAO = new AlunoDAO();
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        Date hoje = new Date();
+
+        for (Agendamento a : agendamentoList) {
+
+            Date horario = new Date();
+            try {
+                horario = dateFormat.parse(a.getHorario());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long diferenca = horario.getTime() - hoje.getTime();
+
+            if (diferenca > 0) {
+
+                Aluno aluno = alunoDAO.buscarPorId(a.getCodAluno());
+
+                System.out.printf("= Agendamento %d\n" +
+                        "  - Aluno: %s\n" +
+                        "  - Horário: %s\n",
+                        a.getCodAgendamento(), aluno.getNome(), a.getHorario());
+
             }
 
         }
