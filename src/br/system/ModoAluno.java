@@ -30,9 +30,9 @@ public class ModoAluno {
         int verDisciplinas;
         int codCurso;
 
-        System.out.printf("%s= CURSOS%s%n", CYAN, RESET);
+        System.out.printf("%s= CURSOS%s\n", CYAN, RESET);
         for (Curso c : cursoList) {
-            System.out.printf("%s[%02d] %s %s%n", CYAN, c.getCodCurso(), c.getNomeCurso(), RESET);
+            System.out.printf("%s[%02d] %s %s\n", CYAN, c.getCodCurso(), c.getNomeCurso(), RESET);
         }
 
         System.out.printf("%sDeseja ver mais detalhes de determinado curso? [1] Sim  [0] Não%s%n", YELLOW, RESET);
@@ -40,7 +40,7 @@ public class ModoAluno {
             System.out.print("Selecione: ");
             verDisciplinas = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
             if (verDisciplinas < 0 || verDisciplinas > 1)
-                System.out.printf("%s<!> Digite novamente%s%n", RED, RESET);
+                System.out.printf("%s<!> Digite novamente%s\n", RED, RESET);
         } while (verDisciplinas < 0 || verDisciplinas > 1);
 
         if (verDisciplinas == 1) {
@@ -49,7 +49,7 @@ public class ModoAluno {
                 System.out.print("Selecione o curso: ");
                 codCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
                 if (codCurso < 0 || codCurso > cursoList.size())
-                    System.out.printf("%s<!> Digite novamente%s%n", RED, RESET);
+                    System.out.printf("%s<!> Digite novamente%s\n", RED, RESET);
             } while (codCurso < 0 || codCurso > cursoList.size());
 
             CursoDisciplinaDAO cursoDisciplinaDAO = new CursoDisciplinaDAO();
@@ -70,9 +70,12 @@ public class ModoAluno {
 
             }
 
-            System.out.printf("%n%s= NOME DO CURSO: %s%nDURAÇÃO: %s anos%nDISCIPLINAS: %s%n", CYAN, curso.getNomeCurso(), curso.getDuracao(), RESET);
+            System.out.printf("%n%s= NOME DO CURSO: %s\n" +
+                    "DURAÇÃO: %s anos\n" +
+                    "DISCIPLINAS: %s\n",
+                    CYAN, curso.getNomeCurso(), curso.getDuracao(), RESET);
             for (Disciplina d : disciplinasCurso) {
-                System.out.printf("%s- %s%s%n", CYAN, d.getNome(), RESET);
+                System.out.printf("%s- %s%s\n", CYAN, d.getNome(), RESET);
             }
 
         }
@@ -81,44 +84,22 @@ public class ModoAluno {
 
     public static void consultaNotas(int codAluno) {
 
-        AlunoCursoDAO alunoCursoDAO = new AlunoCursoDAO();
-        CursoDisciplinaDAO cursoDisciplinaDAO = new CursoDisciplinaDAO();
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
         NotaDAO notaDAO = new NotaDAO();
 
-        List<AlunoCurso> alunoCursoList = alunoCursoDAO.listar();
-        List<CursoDisciplina> cursoDisciplinaList = cursoDisciplinaDAO.listar();
         List<Nota> notaList = notaDAO.listar();
-
-        List<Disciplina> disciplinas = new ArrayList<>();
         List<Nota> notas = new ArrayList<>();
-        int codCurso = 0;
-
-        for (AlunoCurso a : alunoCursoList) {
-            if (a.getCodAluno() == codAluno) {
-                codCurso = a.getCodCurso();
-                break;
-            }
-        }
-
-        for (CursoDisciplina c : cursoDisciplinaList) {
-            if (c.getCodCurso() == codCurso) {
-                Disciplina disciplina = disciplinaDAO.buscarPorId(c.getCodDisciplina());
-                disciplinas.add(disciplina);
-            }
-        }
 
         for (Nota n : notaList) {
-            for (Disciplina d : disciplinas) {
-                if (n.getCodAluno() == codAluno) {
+            if (n.getCodAluno() == codAluno) {
                     notas.add(n);
-                }
             }
         }
 
-        // sout done
+        System.out.printf("%s= SUAS NOTAS%s\n", CYAN, RESET);
         for (Nota n : notas) {
-            System.out.printf("- %.1f = %d %n", n.getNota(), n.getCodDisciplina());
+            Disciplina d = disciplinaDAO.buscarPorId(n.getCodDisciplina());
+            System.out.printf("%s- %s: %.1f %s\n", CYAN, d.getNome(), n.getNota(), RESET);
         }
 
     }
@@ -133,37 +114,39 @@ public class ModoAluno {
 
         int codLivro;
 
-        // sout done
+        System.out.printf("%s= LIVROS%s\n", BLUE, RESET);
         for (Livro l : livroList) {
-            System.out.printf("[%02d] %s %n", l.getCodLivro(), l.getNome());
+            System.out.printf("%s[%02d] %s %s\n", BLUE, l.getCodLivro(), l.getNome(), RESET);
         }
 
-        System.out.println("Escolha um livro para reservar (0. Cancelar): ");
         do {
+            System.out.print("Escolha um livro para reservar: ");
             codLivro = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-        } while (codLivro < 0 || codLivro > livroList.size());
+            if (codLivro < 1 || codLivro > livroList.size())
+                System.out.printf("%s<!> Código incorreto. Digite novamente%s\n", RED, RESET);
+        } while (codLivro < 1 || codLivro > livroList.size());
 
-        if (codLivro != 0) {
+        Livro livro = livroDAO.buscarPorId(codLivro);
 
-            Livro livro = livroDAO.buscarPorId(codLivro);
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, 7);
 
-            Date date = new Date();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.add(Calendar.DATE, 7);
+        String dataEmprestimo = dateFormat.format(date);
+        String dataDevolucao = dateFormat.format(calendar.getTime());
 
-            String dataEmprestimo = dateFormat.format(date);
-            String dataDevolucao = dateFormat.format(calendar.getTime());
+        ReservaLivro reserva = new ReservaLivro(codAluno, codLivro, dataEmprestimo, dataDevolucao);
+        reservaLivroDAO.salvar(reserva);
 
-            ReservaLivro reserva = new ReservaLivro(codAluno, codLivro, dataEmprestimo, dataDevolucao);
-            reservaLivroDAO.salvar(reserva);
-
-            // sout done
-            System.out.printf("Reserva Feita! %nLivro: %s [%04d] %nData de Emprestimo: %s %nData de Devolução: %s", livro.getNome(), livro.getCodLivro(), reserva.getDataEmprestimo(), reserva.getDataDevolucao());
-
-        }
+        // sout done
+        System.out.printf("%sReserva Feita! \n" +
+                "Livro: %s [%04d] \n" +
+                "Data de Emprestimo: %s \n" +
+                "Data de Devolução: %s%s\n",
+                CYAN, livro.getNome(), livro.getCodLivro(), reserva.getDataEmprestimo(), reserva.getDataDevolucao(), RESET);
 
     }
 
@@ -175,10 +158,17 @@ public class ModoAluno {
         int hora;
         int dias = 0;
 
-        System.out.println("Para que dia deseja marcar o atendimento? ");
-        System.out.println("[1] Amanhã\n[2] Daqui uma semana\n[3] Daqui duas semanas\n[0] Cancelar");
+        System.out.printf("%s= DATA DO ATENDIMENTO" +
+                "[1] Amanhã\n" +
+                "[2] Daqui uma semana\n" +
+                "[3] Daqui duas semanas\n" +
+                "[0] Cancelar%s\n",
+                BLUE, RESET);
         do {
+            System.out.print("Digite para quando deseja marcar o atendimento: ");
             data = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+            if (data < 0 || data > 3)
+                System.out.printf("%s<!> Número inválido. Digite novamente%s\n", RED, RESET);
         } while (data < 0 || data > 3);
 
         if (data != 0) {
@@ -189,10 +179,16 @@ public class ModoAluno {
 
             }
 
-            System.out.println("Qual horário?");
-            System.out.println("[1] Manhã\n[2] Tarde\n[3] Noite");
+            System.out.printf("%s= HORÁRIOS DISPONÍVEIS\n" +
+                    "[1] Manhã\n" +
+                    "[2] Tarde\n" +
+                    "[3] Noite%s\n",
+                    BLUE, RESET);
             do {
+                System.out.print("Selecione um horário: ");
                 hora = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+                if (hora < 1 || hora > 3)
+                    System.out.printf("%s<!> Número inválido. Digite novamente%s\n", RED, RESET);
             } while (hora < 1 || hora > 3);
 
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -212,7 +208,7 @@ public class ModoAluno {
             Agendamento agendamento = new Agendamento(1, codAluno, dataHorario);
             agendamentoDAO.salvar(agendamento);
 
-            System.out.printf("Agendamento marcado para %s!%n", dataHorario);
+            System.out.printf("%s= Agendamento marcado para %s!%s\n", CYAN, dataHorario, RESET);
 
         }
 
@@ -224,20 +220,21 @@ public class ModoAluno {
         AlunoDAO alunoDAO = new AlunoDAO();
         Aluno aluno = alunoDAO.buscarPorId(codAluno);
 
-        System.out.printf("Atualize os dados de %s (<!> Para manter os dados atuais, deixe em branco)%n", aluno.getNome());
-        System.out.printf("| Nome: %s %nNovo nome: ", aluno.getNome());
+        System.out.printf("%s= Atualize os dados de %s (<!> Para manter os dados atuais, deixe em branco)%s\n",
+                PURPLE, aluno.getNome(), RESET);
+        System.out.printf("%s| Nome: %s %s\nNovo nome: ", YELLOW, aluno.getNome(), RESET);
         String nome = input.nextLine();
         if (nome.equals("")){
             nome = aluno.getNome();
         }
 
-        System.out.printf("| RG: %s %nNovo RG: ", aluno.getRg());
+        System.out.printf("%s| RG: %s %s\nNovo RG: ",  YELLOW, aluno.getRg(), RESET);
         String rg = input.nextLine();
         if (rg.equals("")) {
             rg = aluno.getRg();
         }
 
-        System.out.printf("| CPF: %s %nNovo CPF: ", aluno.getCpf());
+        System.out.printf("%s| CPF: %s %s\nNovo CPF: ", YELLOW, aluno.getCpf(), RESET);
         String cpf = input.nextLine();
         if (cpf.equals("")) {
             cpf = aluno.getCpf();
@@ -257,7 +254,7 @@ public class ModoAluno {
         Calendar hoje = Calendar.getInstance();
         hoje.setTime(new Date());
 
-        System.out.printf("| Data de Nascimento: %s %n", aluno.getNasc());
+        System.out.printf("%s| Data de Nascimento: %s %s\n", YELLOW, aluno.getNasc(), RESET);
         String dia;
         do {
             System.out.print("- Dia: ");
@@ -290,13 +287,13 @@ public class ModoAluno {
         Aluno alunoAtualizado = new Aluno(codAluno, nome, rg, cpf, nasc);
         alunoDAO.atualizar(alunoAtualizado);
 
-        System.out.printf("-x- ALUNO ATUALIZADO! -x-%n" +
-                "Matrícula: %08d%n" +
-                "Nome: %s%n" +
-                "RG: %s%n" +
-                "CPF: %s%n" +
-                "Data de Nascimento: %s%n",
-                aluno.getCodAluno(), aluno.getNome(), aluno.getRg(), aluno.getCpf(), aluno.getNasc());
+        System.out.printf("%s= ALUNO ATUALIZADO! \n" +
+                "Matrícula: %08d\n" +
+                "Nome: %s\n" +
+                "RG: %s\n" +
+                "CPF: %s\n" +
+                "Data de Nascimento: %s %s\n",
+                CYAN, aluno.getCodAluno(), aluno.getNome(), aluno.getRg(), aluno.getCpf(), aluno.getNasc(), RESET);
 
     }
 
