@@ -7,7 +7,8 @@ public class Program {
          //ModoAluno.consultaCursos();
         //ModoProfessor.cadastroNotas();
         //ModoAluno.reservarLivros(2);
-        ModoProfessor.consultarAluno();
+        //ModoProfessor.consultarAluno();
+        ModoProfessor.CosultaAgendamento();
 
     }
 

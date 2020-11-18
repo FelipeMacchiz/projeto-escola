@@ -3,7 +3,11 @@ package br.system;
 import br.dao.*;
 import br.model.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -102,7 +106,7 @@ public class ModoProfessor {
             System.out.println(c.getNomeCurso());
         }
 
-        System.out.println("Selecione o Curso (0. Cancelar): ");
+        System.out.println("Selecione o Curso: (0. Cancelar): ");
         do {
             codCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
         } while (codCurso < 0 || codCurso> cursoList.size());
@@ -130,7 +134,28 @@ public class ModoProfessor {
             }
         }
     }
+    public static void CosultaAgendamento () {
 
+        AgendamentoDAO agendamentoDAO = new AgendamentoDAO();
+        List<Agendamento> agendamentosList = agendamentoDAO.listar();
+        AlunoDAO alunoDAO = new AlunoDAO();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date hoje = new Date();
+
+        for (Agendamento a: agendamentosList) {
+            Date horario = new Date();
+            try {
+                horario = dateFormat.parse(a.getHorario());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long diferenca = horario.getTime()-hoje.getTime();
+            if (diferenca > 0){
+                Aluno aluno = alunoDAO.buscarPorId(a.getCodAluno());
+                System.out.printf("Agendamento %d\naluno: %s\n horario:%s\n",a.getCodAgendamento(),aluno.getNome(),a.getHorario());
+            }
+        }
+    }
 
 
 }
