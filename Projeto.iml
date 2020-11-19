@@ -7,7 +7,6 @@
         <datasource-mapping>
           <factory-entry name="Projeto" value="f7f15e0c-608f-4f85-81b8-59de3827f491" />
           <factory-entry name="dados-escolar" value="f7f15e0c-608f-4f85-81b8-59de3827f491" />
-          <factory-entry name="dados_escolar" value="f7f15e0c-608f-4f85-81b8-59de3827f491" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/META-INF/persistence.xml" />

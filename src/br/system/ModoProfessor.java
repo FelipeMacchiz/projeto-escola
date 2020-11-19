@@ -137,7 +137,7 @@ public class ModoProfessor {
 
     }
 
-    public static void consultaAgendamento() {
+    public static void consultarAgendamento() {
 
         AgendamentoDAO agendamentoDAO = new AgendamentoDAO();
         List<Agendamento> agendamentoList = agendamentoDAO.listar();

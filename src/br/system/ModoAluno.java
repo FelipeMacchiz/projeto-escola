@@ -205,7 +205,7 @@ public class ModoAluno {
 
             String dataHorario = dateFormat.format(calendar.getTime());
 
-            Agendamento agendamento = new Agendamento(1, codAluno, dataHorario);
+            Agendamento agendamento = new Agendamento(codAluno, dataHorario);
             agendamentoDAO.salvar(agendamento);
 
             System.out.printf("%s= Agendamento marcado para %s!%s\n", CYAN, dataHorario, RESET);

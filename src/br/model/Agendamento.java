@@ -21,12 +21,6 @@ public class Agendamento {
     private int codAgendamento;
 
     @JoinColumn(
-            foreignKey = @ForeignKey(name = "CodServico", value = ConstraintMode.NO_CONSTRAINT)
-    )
-    @Column(name = "codServico", nullable = false)
-    private int codServico;
-
-    @JoinColumn(
             foreignKey = @ForeignKey(name = "CodAluno", value = ConstraintMode.NO_CONSTRAINT)
     )
     @Column(name = "codAluno", nullable = false)
@@ -37,14 +31,12 @@ public class Agendamento {
 
     public Agendamento() {
     }
-    public Agendamento(int codServico, int codAluno, String horario) {
-        this.codServico = codServico;
+    public Agendamento(int codAluno, String horario) {
         this.codAluno = codAluno;
         this.horario = horario;
     }
-    public Agendamento(int codAgendamento, int codServico, int codAluno, String horario) {
+    public Agendamento(int codAgendamento, int codAluno, String horario) {
         this.codAgendamento = codAgendamento;
-        this.codServico = codServico;
         this.codAluno = codAluno;
         this.horario = horario;
     }
@@ -54,13 +46,6 @@ public class Agendamento {
     }
     public void setCodAgendamento(int codAgendamento) {
         this.codAgendamento = codAgendamento;
-    }
-
-    public int getCodServico() {
-        return codServico;
-    }
-    public void setCodServico(int codServico) {
-        this.codServico = codServico;
     }
 
     public int getCodAluno() {
