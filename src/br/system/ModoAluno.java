@@ -26,12 +26,14 @@ public class ModoAluno {
 
         CursoDAO cursoDAO = new CursoDAO();
         List<Curso> cursoList = cursoDAO.listar();
+        List<Integer> codigos = new ArrayList<>();
 
         int verDisciplinas;
         int codCurso;
 
         System.out.printf("%s= CURSOS%s\n", CYAN, RESET);
         for (Curso c : cursoList) {
+            codigos.add(c.getCodCurso());
             System.out.printf("%s[%02d] %s %s\n", CYAN, c.getCodCurso(), c.getNomeCurso(), RESET);
         }
 
@@ -48,9 +50,9 @@ public class ModoAluno {
             do {
                 System.out.print("Selecione o curso: ");
                 codCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-                if (codCurso < 0 || codCurso > cursoList.size())
+                if (!(codigos.contains(codCurso)))
                     System.out.printf("%s<!> Digite novamente%s\n", RED, RESET);
-            } while (codCurso < 0 || codCurso > cursoList.size());
+            } while (!(codigos.contains(codCurso)));
 
             CursoDisciplinaDAO cursoDisciplinaDAO = new CursoDisciplinaDAO();
             DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
@@ -111,20 +113,22 @@ public class ModoAluno {
         ReservaLivroDAO reservaLivroDAO = new ReservaLivroDAO();
         LivroDAO livroDAO = new LivroDAO();
         List<Livro> livroList = livroDAO.listar();
+        List<Integer> codigos = new ArrayList<>();
 
         int codLivro;
 
         System.out.printf("%s= LIVROS%s\n", BLUE, RESET);
         for (Livro l : livroList) {
+            codigos.add(l.getCodLivro());
             System.out.printf("%s[%02d] %s %s\n", BLUE, l.getCodLivro(), l.getNome(), RESET);
         }
 
         do {
             System.out.print("Escolha um livro para reservar: ");
             codLivro = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-            if (codLivro < 1 || codLivro > livroList.size())
+            if (!(codigos.contains(codLivro)))
                 System.out.printf("%s<!> Código incorreto. Digite novamente%s\n", RED, RESET);
-        } while (codLivro < 1 || codLivro > livroList.size());
+        } while (!(codigos.contains(codLivro)));
 
         Livro livro = livroDAO.buscarPorId(codLivro);
 
@@ -158,7 +162,7 @@ public class ModoAluno {
         int hora;
         int dias = 0;
 
-        System.out.printf("%s= DATA DO ATENDIMENTO" +
+        System.out.printf("%s= DATA DO ATENDIMENTO\n" +
                 "[1] Amanhã\n" +
                 "[2] Daqui uma semana\n" +
                 "[3] Daqui duas semanas\n" +
@@ -288,7 +292,7 @@ public class ModoAluno {
         alunoDAO.atualizar(alunoAtualizado);
 
         System.out.printf("%s= ALUNO ATUALIZADO! \n" +
-                "Matrícula: %08d\n" +
+                "Matrícula: %04d\n" +
                 "Nome: %s\n" +
                 "RG: %s\n" +
                 "CPF: %s\n" +

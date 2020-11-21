@@ -24,50 +24,48 @@ public class ModoNaoAluno {
 
 		Scanner input = new Scanner(System.in);
 
-
-		System.out.println("Informe o nome do aluno(a): ");
-		String nome = input.nextLine();
-
-		System.out.println("Informe o CPF do aluno(a): ");
-		String cpf = input.nextLine();
-
-		System.out.println("Informe o RG do aluno(a): ");
-		String rg = input.nextLine();
-
-		System.out.println("Informe a data de nascimento: ");
-
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		Date dateNasc = new Date();
-		int dia;
-		int mes;
-		int ano;
+		List<Integer> codigos = new ArrayList<>();
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		int anoHoje = calendar.get(Calendar.YEAR);
 
+		int dia;
+		int mes;
+		int ano;
+		int codCurso;
+
+		System.out.printf("%s= CADASTRO NOVO ALUNO%s\n", YELLOW, RESET);
+		System.out.print("Digite o seu nome: ");
+		String nome = input.nextLine();
+
+		System.out.print("Digite o seu CPF: ");
+		String cpf = input.nextLine();
+
+		System.out.print("Digite o seu RG: ");
+		String rg = input.nextLine();
+
+		System.out.printf("%sInforme a data de nascimento: %s\n", YELLOW, RESET);
+
 		do {
-			System.out.println("DIA");
+			System.out.print("- Dia: ");
 			dia = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-			if (dia > 31 || dia < 1) {
-				System.out.println("Inválido");
-			}
-		} while (dia > 31 || dia < 1);
+			if (dia < 1 || dia > 31)
+				System.out.printf("%s<!> Dia inválido. Digite novamente%s\n", RED, RESET);
+		} while (dia < 1 || dia > 31);
 
 		do {
-			System.out.println("MÊS");
+			System.out.print("- Mês: ");
 			mes = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-			if (mes > 12 || mes < 1) {
-				System.out.println("Inválido");
-			}
-		} while (mes > 12 || mes < 1);
+			if (mes < 1 || mes > 12)
+				System.out.printf("%s<!> Mês inválido. Digite novamente%s\n", RED, RESET);
+		} while (mes < 1 || mes > 12);
 
 		do {
-			System.out.println("ANO");
+			System.out.print("- Ano: ");
 			ano = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-			if (ano > anoHoje) {
-				System.out.println("Inválido");
-			}
+			if (ano > anoHoje)
+				System.out.printf("%s<!> Ano inválido. Digite novamente%s\n", RED, RESET);
 		} while (ano > anoHoje);
 
 		String nasc = String.format("%s/%s/%s", dia, mes, ano);
@@ -78,25 +76,31 @@ public class ModoNaoAluno {
 		CursoDAO cursoDAO = new CursoDAO();
 		List<Curso> cursoList = cursoDAO.listar();
 
+		System.out.printf("%s= CURSOS%s\n", BLUE, RESET);
 		for (Curso c : cursoList) {
-			System.out.printf("[%02d] %s %n", c.getCodCurso(), c.getNomeCurso());
+			codigos.add(c.getCodCurso());
+			System.out.printf("%s[%02d] %s%s\n", BLUE, c.getCodCurso(), c.getNomeCurso(), RESET);
 		}
 
-		int codCurso;
 		do {
-			System.out.println("Escolha um Curso: ");
+			System.out.print("Escolha um Curso: ");
 			codCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-			if (codCurso < 1 || codCurso > cursoList.size()) {
-				System.out.println("INVÁLIDO");
-			}
-		} while (codCurso < 1 || codCurso > cursoList.size());
+			if (!(codigos.contains(codCurso)))
+				System.out.printf("%s<!> Digite novamente%s\n", RED, RESET);
+		} while (!(codigos.contains(codCurso)));
 
 		AlunoCursoDAO alunoCursoDAO = new AlunoCursoDAO();
 		AlunoCurso alunoCurso = new AlunoCurso(codCurso);
 		alunoCursoDAO.salvar(alunoCurso);
 
-		System.out.println("\n=========|O ALUNO FOI CADASTRADO COM SUCESSO, BEM VINDO A FACULDADE KONOHA|=========");
-
+		System.out.printf("%s[!] Aluno cadastrado!%s\n", GREEN, RESET);
+		System.out.printf("%s= DADOS\n" +
+				"- Matrícula: %04d\n" +
+				"- Nome: %s\n" +
+				"- CPF: %s\n" +
+				"- RG: %s\n" +
+				"- Data de Nascimento: %s%s\n",
+				CYAN, aluno.getCodAluno(), aluno.getNome(), aluno.getCpf(), aluno.getRg(), aluno.getNasc(), RESET);
 
 	}
 
@@ -106,70 +110,55 @@ public class ModoNaoAluno {
 
 		CursoDAO cursoDAO = new CursoDAO();
 		List<Curso> cursoList = cursoDAO.listar();
+		List<Integer> codigos = new ArrayList<>();
 
-		int verDisciplinas;
 		int codCurso;
 
-		//Listarr os Cursos//
+		//Listar os Cursos//
 
-		System.out.printf("CURSO %n");
+		System.out.printf("%s= CURSOS%s\n", BLUE, RESET);
 		for (Curso c : cursoList) {
-			System.out.printf("[%02d]%s%n", c.getCodCurso(), c.getNomeCurso());
+			codigos.add(c.getCodCurso());
+			System.out.printf("%s[%02d]%s%s\n", BLUE, c.getCodCurso(), c.getNomeCurso(), RESET);
+		}
+
+		//Selecionar o curso//
+
+		do {
+			System.out.print("Selecione o curso: ");
+			codCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+			if (!(codigos.contains(codCurso)))
+				System.out.printf("%s<!> Digite novamente%s\n", RED, RESET);
+		} while (!(codigos.contains(codCurso)));
+
+		CursoDisciplinaDAO cursoDisciplinaDAO = new CursoDisciplinaDAO();
+		DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+
+		Curso curso = cursoDAO.buscarPorId(codCurso);
+
+		List<CursoDisciplina> cursoDisciplinaList = cursoDisciplinaDAO.listar();
+
+		List<Disciplina> disciplinasCurso = new ArrayList<>();
+
+		for (CursoDisciplina c : cursoDisciplinaList) {
+
+			if (c.getCodCurso() == codCurso) {
+				Disciplina disciplina = disciplinaDAO.buscarPorId(c.getCodDisciplina());
+				disciplinasCurso.add(disciplina);
+			}
+
 		}
 
 		//------------------//
 
-		//Ver detalhes do curso//
+		//Informações do Curso//
 
-		System.out.printf("Deseja ver mais detalhes do curso? [1] Sim  [0] Não %n");
-		do {
-			System.out.print("Selecione uma das opções: ");
-			verDisciplinas = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-			if (verDisciplinas < 0 || verDisciplinas > 1)
-				System.out.printf("ERRO: Digite novamente por favor %n");
-		} while (verDisciplinas < 0 || verDisciplinas > 1);
-
-		//------------------//
-
-		//Selecionar o curso//
-
-		if (verDisciplinas == 1) {
-
-			do {
-				System.out.print("Selecione o curso: ");
-				codCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-				if (codCurso < 0 || codCurso > cursoList.size())
-					System.out.printf("ERRO: Digite novamente por favor %n");
-			} while (codCurso < 0 || codCurso > cursoList.size());
-
-			CursoDisciplinaDAO cursoDisciplinaDAO = new CursoDisciplinaDAO();
-			DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-
-			Curso curso = cursoDAO.buscarPorId(codCurso);
-
-			List<CursoDisciplina> cursoDisciplinaList = cursoDisciplinaDAO.listar();
-
-			List<Disciplina> disciplinasCurso = new ArrayList<>();
-
-			for (CursoDisciplina c : cursoDisciplinaList) {
-
-				if (c.getCodCurso() == codCurso) {
-					Disciplina disciplina = disciplinaDAO.buscarPorId(c.getCodDisciplina());
-					disciplinasCurso.add(disciplina);
-				}
-
-			}
-
-			//------------------//
-
-			//Informações do Curso//
-
-			System.out.printf("%nNOME DO CURSO:%s %nDURAÇÃO:%s anos %nDISCIPLINAS: ", curso.getNomeCurso(), curso.getDuracao());
-			for (Disciplina d : disciplinasCurso) {
-				System.out.printf("%s%n", d.getNome());
-			}
-
-			//------------------//
+		System.out.printf("%n%s= NOME DO CURSO: %s\n" +
+						"DURAÇÃO: %s anos\n" +
+						"DISCIPLINAS: %s\n",
+				CYAN, curso.getNomeCurso(), curso.getDuracao(), RESET);
+		for (Disciplina d : disciplinasCurso) {
+			System.out.printf("%s- %s%s\n", CYAN, d.getNome(), RESET);
 		}
 
 	}

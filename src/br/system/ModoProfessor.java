@@ -6,10 +6,19 @@ import br.model.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.*;
 
 public class ModoProfessor {
+
+    public static final String RESET = "\u001B[0m";
+    public static final String BLACK = "\u001B[30m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String PURPLE = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String WHITE = "\u001B[37m";
 
     public static void cadastroNotas() {
 
@@ -18,76 +27,90 @@ public class ModoProfessor {
         NotaDAO notaDAO = new NotaDAO();
         CursoDAO cursoDAO = new CursoDAO();
         List<Curso> cursoList = cursoDAO.listar();
+        List<Integer> codigos = new ArrayList<>();
 
         int codCurso;
+        int codDisciplina;
+        int codAluno;
 
+        System.out.printf("%s= CURSOS%s\n", BLUE, BLACK);
         for (Curso c : cursoList) {
-            System.out.println(c.getNomeCurso());
+            codigos.add(c.getCodCurso());
+            System.out.printf("%s[%02d] %s%s\n", BLUE, c.getCodCurso(), c.getNomeCurso(), RESET);
         }
 
-        System.out.println("Selecione o curso (0. Cancelar): ");
         do {
+            System.out.print("Selecione o curso: ");
             codCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-        } while (codCurso < 0 || codCurso > cursoList.size());
+            if (!(codigos.contains(codCurso)))
+                System.out.printf("%s<!> Digite novamente%s\n", RED, RESET);
+        } while (!(codigos.contains(codCurso)));
 
-        if (codCurso != 0) {
+        codigos.clear();
 
-            CursoDisciplinaDAO cursoDisciplinaDAO = new CursoDisciplinaDAO();
-            DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-            AlunoCursoDAO alunoCursoDAO = new AlunoCursoDAO();
-            AlunoDAO alunoDAO = new AlunoDAO();
+        CursoDisciplinaDAO cursoDisciplinaDAO = new CursoDisciplinaDAO();
+        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+        AlunoCursoDAO alunoCursoDAO = new AlunoCursoDAO();
+        AlunoDAO alunoDAO = new AlunoDAO();
 
-            List<CursoDisciplina> cursoDisciplinaList = cursoDisciplinaDAO.listar();
-            List<AlunoCurso> alunoCursoList = alunoCursoDAO.listar();
+        List<CursoDisciplina> cursoDisciplinaList = cursoDisciplinaDAO.listar();
+        List<AlunoCurso> alunoCursoList = alunoCursoDAO.listar();
 
-            List<Disciplina> disciplinas = new ArrayList<>();
-            List<Aluno> alunos = new ArrayList<>();
+        List<Disciplina> disciplinas = new ArrayList<>();
+        List<Aluno> alunos = new ArrayList<>();
 
-            for (CursoDisciplina c : cursoDisciplinaList) {
-                if (c.getCodCurso() == codCurso) {
-                    int idDisciplina = c.getCodDisciplina();
-                    Disciplina disciplina = disciplinaDAO.buscarPorId(idDisciplina);
-                    disciplinas.add(disciplina);
-                }
+        for (CursoDisciplina c : cursoDisciplinaList) {
+            if (c.getCodCurso() == codCurso) {
+                int idDisciplina = c.getCodDisciplina();
+                Disciplina disciplina = disciplinaDAO.buscarPorId(idDisciplina);
+                disciplinas.add(disciplina);
             }
-
-            for (AlunoCurso a : alunoCursoList) {
-                if (a.getCodCurso() == codCurso) {
-                    int idAluno = a.getCodAluno();
-                    Aluno aluno = alunoDAO.buscarPorId(idAluno);
-                    alunos.add(aluno);
-                }
-            }
-
-            for (Disciplina d : disciplinas) {
-                System.out.printf("[%02d] %s %n", d.getCodDisciplina(), d.getNome());
-            }
-
-            System.out.println("Selecione a disciplina (0. Cancelar)");
-            int codDisciplina = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-
-            if (codDisciplina != 0) {
-
-                for (Aluno a : alunos) {
-                    System.out.printf("[%02d] %s %n", a.getCodAluno(), a.getNome());
-                }
-
-                System.out.println("Selecione o aluno (0. Cancelar)");
-                int codAluno = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-
-                if (codAluno != 0) {
-
-                    System.out.print("Digite a nota do aluno: ");
-                    double nota = Double.parseDouble(input.nextLine().replaceAll("[^0-9]", ""));
-
-                    Nota cadastrarNota = new Nota(codAluno, codDisciplina, nota);
-                    notaDAO.salvar(cadastrarNota);
-
-                }
-
-            }
-
         }
+
+        for (AlunoCurso a : alunoCursoList) {
+            if (a.getCodCurso() == codCurso) {
+                int idAluno = a.getCodAluno();
+                Aluno aluno = alunoDAO.buscarPorId(idAluno);
+                alunos.add(aluno);
+            }
+        }
+
+
+        System.out.printf("%s= DISCIPLINA%s\n", BLUE, RESET);
+        for (Disciplina d : disciplinas) {
+            codigos.add(d.getCodDisciplina());
+            System.out.printf("%s[%02d] %s %s\n", BLUE, d.getCodDisciplina(), d.getNome(), RESET);
+        }
+
+        do {
+            System.out.print("Selecione a disciplina: ");
+            codDisciplina = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+            if (!(codigos.contains(codDisciplina)))
+                System.out.printf("%s<!> Digite novamente%s\n", RED, RESET);
+        } while (!(codigos.contains(codDisciplina)));
+
+        codigos.clear();
+
+        System.out.printf("%s= ALUNOS%s\n", BLUE, RESET);
+        for (Aluno a : alunos) {
+            codigos.add(a.getCodAluno());
+            System.out.printf("%s[%02d] %s %s\n", BLUE, a.getCodAluno(), a.getNome(), RESET);
+        }
+
+        do {
+            System.out.print("Selecione o aluno: ");
+            codAluno = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
+            if (!(codigos.contains(codAluno)))
+                System.out.printf("%s<!> Digite novamente%s\n", RED, RESET);
+        } while (!(codigos.contains(codAluno)));
+
+        System.out.print("Digite a nota do aluno: ");
+        double nota = Double.parseDouble(input.nextLine().replaceAll("[^\\d.,]+", ""));
+
+        Nota cadastrarNota = new Nota(codAluno, codDisciplina, nota);
+        notaDAO.salvar(cadastrarNota);
+
+        System.out.printf("%s[!] Nota cadastrada%s\n", PURPLE, RESET);
 
     }
 
@@ -97,42 +120,43 @@ public class ModoProfessor {
 
         CursoDAO cursoDAO = new CursoDAO();
         List<Curso> cursoList = cursoDAO.listar();
+        List<Integer> codigos = new ArrayList<>();
         int codCurso;
 
+        System.out.printf("%s= CURSOS%s\n", BLUE, RESET);
         for (Curso c : cursoList) {
-            System.out.printf("[%2d] %s %n", c.getCodCurso(), c.getNomeCurso());
+            codigos.add(c.getCodCurso());
+            System.out.printf("%s[%02d] %s %s\n", BLUE, c.getCodCurso(), c.getNomeCurso(), RESET);
         }
-        System.out.println("[00] Cancelar");
 
         do {
             System.out.print("Selecione o curso: ");
             codCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
-        } while (codCurso < 0 || codCurso > cursoList.size());
+            if (!(codigos.contains(codCurso)))
+                System.out.printf("%s<!> Digite novamente%s\n", RED, RESET);
+        } while (!(codigos.contains(codCurso)));
 
-        if (codCurso != 0) {
+        AlunoCursoDAO alunoCursoDAO = new AlunoCursoDAO();
+        AlunoDAO alunoDAO = new AlunoDAO();
 
-            AlunoCursoDAO alunoCursoDAO = new AlunoCursoDAO();
-            AlunoDAO alunoDAO = new AlunoDAO();
-            Curso curso = cursoDAO.buscarPorId(codCurso);
-            List<AlunoCurso> alunoCursoList = alunoCursoDAO.listar();
-            List<Integer> codAlunoList = new ArrayList<>();
-            List<Aluno> alunoList = new ArrayList<>();
+        Curso curso = cursoDAO.buscarPorId(codCurso);
+        List<AlunoCurso> alunoCursoList = alunoCursoDAO.listar();
+        List<Integer> codAlunoList = new ArrayList<>();
+        List<Aluno> alunoList = new ArrayList<>();
 
-            for (AlunoCurso a : alunoCursoList) {
-                if (a.getCodCurso() == codCurso) {
-                    codAlunoList.add(a.getCodAluno());
-                }
+        for (AlunoCurso a : alunoCursoList) {
+            if (a.getCodCurso() == codCurso) {
+                codAlunoList.add(a.getCodAluno());
             }
+        }
 
-            for (int codAluno : codAlunoList) {
-                alunoList.add(alunoDAO.buscarPorId(codAluno));
-            }
+        for (int codAluno : codAlunoList) {
+            alunoList.add(alunoDAO.buscarPorId(codAluno));
+        }
 
-            System.out.println("Lista de alunos do curso " + curso.getNomeCurso());
-            for (Aluno a : alunoList) {
-                System.out.printf("- %03d, %s %n", a.getCodAluno(), a.getNome());
-            }
-
+        System.out.printf("%sLista de alunos do curso %s%s\n", CYAN, curso.getNomeCurso(), RESET);
+        for (Aluno a : alunoList) {
+            System.out.printf("%s- %04d, %s %s\n", CYAN, a.getCodAluno(), a.getNome(), RESET);
         }
 
     }
@@ -162,10 +186,10 @@ public class ModoProfessor {
 
                 Aluno aluno = alunoDAO.buscarPorId(a.getCodAluno());
 
-                System.out.printf("= Agendamento %d\n" +
+                System.out.printf("%s= Agendamento %d\n" +
                         "  - Aluno: %s\n" +
-                        "  - Horário: %s\n",
-                        a.getCodAgendamento(), aluno.getNome(), a.getHorario());
+                        "  - Horário: %s%s\n",
+                        CYAN, a.getCodAgendamento(), aluno.getNome(), a.getHorario(), RESET);
 
             }
 

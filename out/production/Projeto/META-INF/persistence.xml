@@ -10,13 +10,11 @@
 		<class>br.model.CursoDisciplina</class>
 		<class>br.model.Departamento</class>
 		<class>br.model.DepFuncionario</class>
-		<class>br.model.DepServico</class>
 		<class>br.model.Disciplina</class>
 		<class>br.model.Funcionario</class>
 		<class>br.model.Livro</class>
 		<class>br.model.Nota</class>
 		<class>br.model.ReservaLivro</class>
-		<class>br.model.Servico</class>
 
 		
 		<properties>
