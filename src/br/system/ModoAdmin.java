@@ -3,12 +3,6 @@ package br.system;
 import br.dao.*;
 import br.model.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,23 +11,14 @@ import java.util.*;
 
 public class ModoAdmin {
 
-	/*
-	- cadastroFuncionario - nome, cpf, rg, nasc
-	- cadastroCurso
-	- cadastroDisciplina
-	- cadastroLivro
-	- cadastroServico
-	*/
-
 	public static final String RESET = "\u001B[0m";
-	public static final String BLACK = "\u001B[30m";
+	public static final String WHITE = "\u001B[30m";
 	public static final String RED = "\u001B[31m";
 	public static final String GREEN = "\u001B[32m";
 	public static final String YELLOW = "\u001B[33m";
 	public static final String BLUE = "\u001B[34m";
 	public static final String PURPLE = "\u001B[35m";
 	public static final String CYAN = "\u001B[36m";
-	public static final String WHITE = "\u001B[37m";
 
 	public static void cadastroFuncionario() {
 
@@ -41,14 +26,14 @@ public class ModoAdmin {
 
 		System.out.printf("%s= CADASTRO DO FUNCIONÁRIO%s\n", BLUE, RESET);
 
-		System.out.print("Nome: ");
+		System.out.printf("%sNome: %s", WHITE, RESET);
 		String nome = input.nextLine();
 
-		System.out.print("CPF: ");
-		String CPF = input.nextLine();
+		System.out.printf("%sCPF: %s", WHITE, RESET);
+		String cpf = input.nextLine();
 
-		System.out.print("RG: ");
-		String RG = input.nextLine();
+		System.out.printf("%sRG: %s", WHITE, RESET);
+		String rg = input.nextLine();
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
@@ -59,7 +44,7 @@ public class ModoAdmin {
 
 		System.out.printf("%s- Data de nascimento%s\n", YELLOW, RESET);
 		do {
-			System.out.print("Dia: ");
+			System.out.printf("%sDia: %s", WHITE, RESET);
 			dia = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
 			if (dia < 1 || dia > 31) {
 				System.out.printf("%s<!> Dia do mês invalido. Digite novamente%s\n", RED, RESET);
@@ -67,7 +52,7 @@ public class ModoAdmin {
 		} while (dia < 1 || dia > 31);
 
 		do {
-			System.out.print("Mês: ");
+			System.out.printf("%sMês: %s", WHITE, RESET);
 			mes = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
 			if (mes < 1 || mes > 12) {
 				System.out.printf("%s<!> Mês invalido. Digite novamente%s\n", RED, RESET);
@@ -75,7 +60,7 @@ public class ModoAdmin {
 		} while (mes < 1 || mes > 12);
 
 		do {
-			System.out.print("Ano: ");
+			System.out.printf("%sAno: %s", WHITE, RESET);
 			ano = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
 			if (ano > anoHoje) {
 				System.out.printf("%s<!> Ano invalido. Digite novamente%s\n", RED, RESET);
@@ -92,7 +77,7 @@ public class ModoAdmin {
 
 		int codDepartamento;
 		do {
-			System.out.print("Digite o código do departamento: ");
+			System.out.printf("%sDigite o código do departamento: %s", WHITE, RESET);
 			codDepartamento =  Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
 			if ( codDepartamento < 0 || codDepartamento > departamentoList.size())
 				System.out.printf("%s<!> Ano invalido. Digite novamente%s\n", RED, RESET);
@@ -109,7 +94,7 @@ public class ModoAdmin {
 		String nasc = dateFormat.format(instance.getTime());
 
 		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-		Funcionario funcionario = new Funcionario(nome, RG, CPF, nasc);
+		Funcionario funcionario = new Funcionario(nome, rg, cpf, nasc);
 		funcionarioDAO.salvar(funcionario);
 
 		DepFuncionarioDAO depFuncionarioDAO = new DepFuncionarioDAO();
@@ -126,11 +111,11 @@ public class ModoAdmin {
 
 		System.out.printf("%s= CADASTRO CURSO%s\n", YELLOW, RESET);
 
-		System.out.print("Informe o nome do curso: ");
+		System.out.printf("%sInforme o nome do curso: %s", WHITE, RESET);
 		String nomeCurso = input.nextLine();
 
 		do {
-			System.out.print("Qual a duração em anos desse curso: ");
+			System.out.printf("%sQual a duração em anos desse curso: %s", WHITE, RESET);
 			duracao = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
 			if (duracao < 1)
 				System.out.printf("%s<!> O número deve ser um número inteiro maior que 0. Digite novamente%s\n", RED, RESET);
@@ -156,7 +141,7 @@ public class ModoAdmin {
 
 		System.out.printf("%s= CADASTRO DISCIPLINA%s\n", YELLOW, RESET);
 
-		System.out.print("Informe o nome da disciplina: ");
+		System.out.printf("%sInforme o nome da disciplina: %s", WHITE, RESET);
 		String nome = input.nextLine();
 
 		System.out.printf("%s= CURSOS%s\n", BLUE, RESET);
@@ -166,7 +151,7 @@ public class ModoAdmin {
 		}
 
 		do {
-			System.out.print("Escolha o curso: ");
+			System.out.printf("%sEscolha o curso: %s", WHITE, RESET);
 			codCurso = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
 			if (!(codigos.contains(codCurso)))
 				System.out.printf("%s<!> Digite novamente%s\n", RED, RESET);
@@ -190,7 +175,7 @@ public class ModoAdmin {
 
 		System.out.printf("%s= CADASTRO LIVRO%s\n", YELLOW, RESET);
 
-		System.out.print("Informe o nome do livro: ");
+		System.out.printf("%sInforme o nome do livro: %s", WHITE, RESET);
 		String nome = input.nextLine();
 
 		LivroDAO livroDAO = new LivroDAO();
@@ -230,19 +215,19 @@ public class ModoAdmin {
 
 		System.out.printf("%s= Atualize os dados de %s (<!> Para manter os dados atuais, deixe em branco)%s\n",
 				PURPLE, funcionario.getNome(), RESET);
-		System.out.printf("%s| Nome: %s %s\nNovo nome: ", YELLOW, funcionario.getNome(), RESET);
+		System.out.printf("%s| Nome: %s %s\n%sNovo nome: %s", YELLOW, funcionario.getNome(), RESET, WHITE, RESET);
 		String nome = input.nextLine();
 		if (nome.equals("")){
 			nome = funcionario.getNome();
 		}
 
-		System.out.printf("%s| RG: %s %s\nNovo RG: ",  YELLOW, funcionario.getRg(), RESET);
+		System.out.printf("%s| RG: %s %s\n%sNovo RG: %s",  YELLOW, funcionario.getRg(), RESET, WHITE, RESET);
 		String rg = input.nextLine();
 		if (rg.equals("")) {
 			rg = funcionario.getRg();
 		}
 
-		System.out.printf("%s| CPF: %s %s\nNovo CPF: ", YELLOW, funcionario.getCpf(), RESET);
+		System.out.printf("%s| CPF: %s %s\n%sNovo CPF: %s", YELLOW, funcionario.getCpf(), RESET, WHITE, RESET);
 		String cpf = input.nextLine();
 		if (cpf.equals("")) {
 			cpf = funcionario.getCpf();
@@ -265,7 +250,7 @@ public class ModoAdmin {
 		System.out.printf("%s| Data de Nascimento: %s %s\n", YELLOW, funcionario.getNasc(), RESET);
 		String dia;
 		do {
-			System.out.print("- Dia: ");
+			System.out.printf("%s- Dia: %s", WHITE, RESET);
 			dia = input.nextLine().replaceAll("[^0-9]", "");
 			if (dia.equals("")) {
 				dia = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
@@ -274,7 +259,7 @@ public class ModoAdmin {
 
 		String mes;
 		do {
-			System.out.print("- Mês: ");
+			System.out.printf("%s- Mês: %s", WHITE, RESET);
 			mes = input.nextLine().replaceAll("[^0-9]", "");
 			if (mes.equals("")) {
 				mes = String.valueOf(calendar.get(Calendar.MONTH) + 1);
@@ -283,7 +268,7 @@ public class ModoAdmin {
 
 		String ano;
 		do {
-			System.out.print("- Ano: ");
+			System.out.printf("%s- Ano: %s", WHITE, RESET);
 			ano = input.nextLine().replaceAll("[^0-9]", "");
 			if (ano.equals("")) {
 				ano = String.valueOf(calendar.get(Calendar.YEAR));
@@ -334,13 +319,13 @@ public class ModoAdmin {
 		System.out.printf("%s= Atualize os dados de %s (<!> Para manter os dados atuais, deixe em branco)%s\n",
 				PURPLE,curso.getNomeCurso(), RESET);
 
-		System.out.printf("%s| Nome do Curso: %s %s\nNovo nome: ", YELLOW, curso.getNomeCurso(), RESET);
+		System.out.printf("%s| Nome do Curso: %s %s\n%sNovo nome: %s", YELLOW, curso.getNomeCurso(), RESET, WHITE, RESET);
 		String nomeCurso = input.nextLine();
 		if (nomeCurso.equals("")){
 			nomeCurso = curso.getNomeCurso();
 		}
 
-		System.out.printf("%s| Duração do Curso: %d anos%s\nNova duração: ", YELLOW, curso.getDuracao(), RESET);
+		System.out.printf("%s| Duração do Curso: %d anos%s\n%sNova duração: %s", YELLOW, curso.getDuracao(), RESET, WHITE, RESET);
 		String duracao = input.nextLine().replaceAll("[^0-9]", "");
 		if (nomeCurso.equals("")){
 			duracao = String.valueOf(curso.getDuracao());
@@ -406,13 +391,13 @@ public class ModoAdmin {
 		System.out.printf("%s= Atualize os dados de %s (<!> Para manter os dados atuais, deixe em branco)%s\n",
 				PURPLE, disciplina.getNome(), RESET);
 
-		System.out.printf("%s| Nome da Disciplina: %s %s\nNovo nome: ", YELLOW, disciplina.getNome(), RESET);
+		System.out.printf("%s| Nome da Disciplina: %s %s\n%sNovo nome: %s", YELLOW, disciplina.getNome(), RESET, WHITE, RESET);
 		String nome = input.nextLine();
 		if (nome.equals("")){
 			nome = disciplina.getNome();
 		}
 
-		System.out.printf("%s| Curso: [%02d] %s %s\nNovo nome: ", YELLOW, curso.getCodCurso(), curso.getNomeCurso(), RESET);
+		System.out.printf("%s| Curso: [%02d] %s %s\n%sNovo curso: %s", YELLOW, curso.getCodCurso(), curso.getNomeCurso(), RESET, WHITE, RESET);
 		String codCurso = input.nextLine().replaceAll("[^0-9]", "");
 		if (codCurso.equals("")){
 			codCurso = String.valueOf(cursoDisciplina.getCodCurso());
@@ -461,7 +446,7 @@ public class ModoAdmin {
 		System.out.printf("%s= Atualize os dados de %s (<!> Para manter os dados atuais, deixe em branco)%s\n",
 				PURPLE, livro.getNome(), RESET);
 
-		System.out.printf("%s| Nome do Livro: %s %s\nNovo nome: ", YELLOW, livro.getNome(), RESET);
+		System.out.printf("%s| Nome do Livro: %s %s\n%sNovo nome: %s", YELLOW, livro.getNome(), RESET, WHITE, RESET);
 		String nome = input.nextLine();
 		if (nome.equals("")){
 			nome = livro.getNome();
@@ -486,7 +471,6 @@ public class ModoAdmin {
 		List<Funcionario> funcionarioList = funcionarioDAO.listar();
 		List<Integer> codigos = new ArrayList<>();
 
-		Funcionario funcionario;
 		int codFuncionario;
 
 		System.out.printf("%s= LISTA FUNCIONÁRIOS%s\n", BLUE, RESET);
@@ -515,7 +499,6 @@ public class ModoAdmin {
 		List<Curso> cursoList = cursoDAO.listar();
 		List<Integer> codigos = new ArrayList<>();
 
-		Curso curso;
 		int codCurso;
 
 		System.out.printf("%s= CURSOS%s\n", BLUE, RESET);

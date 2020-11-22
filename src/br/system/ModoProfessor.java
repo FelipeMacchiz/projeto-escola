@@ -11,14 +11,12 @@ import java.util.*;
 public class ModoProfessor {
 
     public static final String RESET = "\u001B[0m";
-    public static final String BLACK = "\u001B[30m";
+    public static final String WHITE = "\u001B[30m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
-    public static final String YELLOW = "\u001B[33m";
     public static final String BLUE = "\u001B[34m";
-    public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
-    public static final String WHITE = "\u001B[37m";
+    public static final String BLACK = "\u001B[37m";
 
     public static void cadastroNotas() {
 
@@ -104,13 +102,13 @@ public class ModoProfessor {
                 System.out.printf("%s<!> Digite novamente%s\n", RED, RESET);
         } while (!(codigos.contains(codAluno)));
 
-        System.out.print("Digite a nota do aluno: ");
+        System.out.printf("%sDigite a nota do aluno: %s", WHITE, RESET);
         double nota = Double.parseDouble(input.nextLine().replaceAll("[^\\d.,]+", ""));
 
         Nota cadastrarNota = new Nota(codAluno, codDisciplina, nota);
         notaDAO.salvar(cadastrarNota);
 
-        System.out.printf("%s[!] Nota cadastrada%s\n", PURPLE, RESET);
+        System.out.printf("%s[!] Nota cadastrada%s\n", GREEN, RESET);
 
     }
 

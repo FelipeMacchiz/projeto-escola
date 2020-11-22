@@ -3,21 +3,18 @@ package br.system;
 import br.dao.*;
 import br.model.*;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 import java.util.*;
 
 public class ModoNaoAluno {
 
 	public static final String RESET = "\u001B[0m";
-	public static final String BLACK = "\u001B[30m";
+	public static final String WHITE = "\u001B[30m";
 	public static final String RED = "\u001B[31m";
 	public static final String GREEN = "\u001B[32m";
 	public static final String YELLOW = "\u001B[33m";
 	public static final String BLUE = "\u001B[34m";
-	public static final String PURPLE = "\u001B[35m";
 	public static final String CYAN = "\u001B[36m";
-	public static final String WHITE = "\u001B[37m";
 
 	public static void cadastroAluno() {
 
@@ -36,33 +33,33 @@ public class ModoNaoAluno {
 		int codCurso;
 
 		System.out.printf("%s= CADASTRO NOVO ALUNO%s\n", YELLOW, RESET);
-		System.out.print("Digite o seu nome: ");
+		System.out.printf("%sDigite o seu nome: %s", WHITE, RESET);
 		String nome = input.nextLine();
 
-		System.out.print("Digite o seu CPF: ");
+		System.out.printf("%sDigite o seu CPF: %s", WHITE, RESET);
 		String cpf = input.nextLine();
 
-		System.out.print("Digite o seu RG: ");
+		System.out.printf("%sDigite o seu RG: %s", WHITE, RESET);
 		String rg = input.nextLine();
 
 		System.out.printf("%sInforme a data de nascimento: %s\n", YELLOW, RESET);
 
 		do {
-			System.out.print("- Dia: ");
+			System.out.printf("%s- Dia: %s", WHITE, RESET);
 			dia = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
 			if (dia < 1 || dia > 31)
 				System.out.printf("%s<!> Dia inválido. Digite novamente%s\n", RED, RESET);
 		} while (dia < 1 || dia > 31);
 
 		do {
-			System.out.print("- Mês: ");
+			System.out.printf("%s- Mês: %s", WHITE, RESET);
 			mes = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
 			if (mes < 1 || mes > 12)
 				System.out.printf("%s<!> Mês inválido. Digite novamente%s\n", RED, RESET);
 		} while (mes < 1 || mes > 12);
 
 		do {
-			System.out.print("- Ano: ");
+			System.out.printf("%s- Ano: %s", WHITE, RESET);
 			ano = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
 			if (ano > anoHoje)
 				System.out.printf("%s<!> Ano inválido. Digite novamente%s\n", RED, RESET);

@@ -61,7 +61,7 @@ public class Program {
 
         do {
             do {
-                System.out.print("Informe a sua matrícula: ");
+                System.out.printf("%sInforme a sua matrícula: %s", WHITE, RESET);
                 codAluno = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
                 if (codAluno < 1 || codAluno >= alunoList.size())
                     System.out.printf("%s<!> Matrícula inválida. Digite novamente%s\n", RED, RESET);

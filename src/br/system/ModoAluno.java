@@ -11,14 +11,14 @@ import java.util.*;
 public class ModoAluno {
 
     public static final String RESET = "\u001B[0m";
-    public static final String BLACK = "\u001B[30m";
+    public static final String WHITE = "\u001B[30m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
     public static final String BLUE = "\u001B[34m";
     public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
-    public static final String WHITE = "\u001B[37m";
+    public static final String BLACK = "\u001B[37m";
 
     public static void consultaCursos() {
 
@@ -212,7 +212,10 @@ public class ModoAluno {
             Agendamento agendamento = new Agendamento(codAluno, dataHorario);
             agendamentoDAO.salvar(agendamento);
 
-            System.out.printf("%s= Agendamento marcado para %s!%s\n", CYAN, dataHorario, RESET);
+            System.out.printf("%s= Agendamento marcado\n" +
+                    "Data: %s\n" +
+                    "Horário: %s%s\n",
+                    CYAN, dataHorario.split(" ")[0], dataHorario.split(" ")[1], RESET);
 
         }
 
@@ -226,19 +229,19 @@ public class ModoAluno {
 
         System.out.printf("%s= Atualize os dados de %s (<!> Para manter os dados atuais, deixe em branco)%s\n",
                 PURPLE, aluno.getNome(), RESET);
-        System.out.printf("%s| Nome: %s %s\nNovo nome: ", YELLOW, aluno.getNome(), RESET);
+        System.out.printf("%s| Nome: %s %s\n%sNovo nome: %s", YELLOW, aluno.getNome(), RESET, WHITE, RESET);
         String nome = input.nextLine();
         if (nome.equals("")){
             nome = aluno.getNome();
         }
 
-        System.out.printf("%s| RG: %s %s\nNovo RG: ",  YELLOW, aluno.getRg(), RESET);
+        System.out.printf("%s| RG: %s %s\n%sNovo RG: %s",  YELLOW, aluno.getRg(), RESET, WHITE, RESET);
         String rg = input.nextLine();
         if (rg.equals("")) {
             rg = aluno.getRg();
         }
 
-        System.out.printf("%s| CPF: %s %s\nNovo CPF: ", YELLOW, aluno.getCpf(), RESET);
+        System.out.printf("%s| CPF: %s %s\n%sNovo CPF: %s", YELLOW, aluno.getCpf(), RESET, WHITE, RESET);
         String cpf = input.nextLine();
         if (cpf.equals("")) {
             cpf = aluno.getCpf();
@@ -261,7 +264,7 @@ public class ModoAluno {
         System.out.printf("%s| Data de Nascimento: %s %s\n", YELLOW, aluno.getNasc(), RESET);
         String dia;
         do {
-            System.out.print("- Dia: ");
+            System.out.printf("%s- Dia: %s", WHITE, RESET);
             dia = input.nextLine().replaceAll("[^0-9]", "");
             if (dia.equals("")) {
                 dia = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
@@ -270,7 +273,7 @@ public class ModoAluno {
 
         String mes;
         do {
-            System.out.print("- Mês: ");
+            System.out.printf("%s- Mês: %s", WHITE, RESET);
             mes = input.nextLine().replaceAll("[^0-9]", "");
             if (mes.equals("")) {
                 mes = String.valueOf(calendar.get(Calendar.MONTH) + 1);
@@ -279,7 +282,7 @@ public class ModoAluno {
 
         String ano;
         do {
-            System.out.print("- Ano: ");
+            System.out.printf("%s- Ano: %s", WHITE, RESET);
             ano = input.nextLine().replaceAll("[^0-9]", "");
             if (ano.equals("")) {
                 ano = String.valueOf(calendar.get(Calendar.YEAR));
