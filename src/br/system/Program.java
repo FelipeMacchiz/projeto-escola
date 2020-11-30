@@ -30,6 +30,7 @@ public class Program {
                         "[3] Professor\n" +
                         "[4] Admin%s\n",
                 BLUE, RESET);
+        
         do {
             System.out.print("Selecione o modo: ");
             modo = Integer.parseInt(input.nextLine().replaceAll("[^0-9]", ""));
